@@ -1,0 +1,11 @@
+{
+  "name": "emo",
+  "version": "1.0.0",
+  "description": "Emotion based music player",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anish,meghna,Charu",
+  "license": "ISC"
+}
