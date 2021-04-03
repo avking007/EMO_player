@@ -92,7 +92,7 @@ router.post(
 // route: user/login
 // access: public
 // desc: login user
-router.get(
+router.post(
   '/login',
   [
     check('email', 'Email is required').not().isEmpty(),
@@ -110,6 +110,7 @@ router.get(
 
       //  check whether user exists or not
       const user = await User.findOne({ email });
+     
       if (!user) {
         return res.status(500).json({ errors: ['User does not exists.'] });
       }
