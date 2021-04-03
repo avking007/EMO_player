@@ -64,7 +64,6 @@ router.post(
       await newUser.save();
 
       // create payload for jwt
-      console.log(user)
       const payload = {
         user: {
           id: newUser.id,
@@ -105,7 +104,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    
+
     try {
       let { email, password } = req.body;
 
@@ -121,15 +120,13 @@ router.post(
       if (!match) {
         return res.status(400).send('Invalid email or password');
       }
-      
+
       //  if user is valid, create payload and send jwt token
       const payload = {
         user: {
           id: user._id,
         },
       };
-
-      const {_id,first_name}=user
 
       jwt.sign(
         payload,
@@ -139,7 +136,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          return res.json({ token , user:{_id,first_name,email}});
+          return res.json({ token });
         }
       );
     } catch (error) {
