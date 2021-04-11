@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 
 import { Link } from "react-router-dom"
-import Base from "./core/Base"
-import { signup } from "./helper/auth"
+import Base from "../../../core/Base"
+import { signup } from "../../../helper/auth"
 
 
 
