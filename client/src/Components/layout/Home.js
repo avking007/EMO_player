@@ -1,6 +1,6 @@
 import React from 'react'
-import './App.css'
-import Base from './core/Base'
+import '../../App.css'
+import Base from '../../core/Base'
 const  Home =() => {
     return (
       <Base >
