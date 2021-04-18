@@ -14,7 +14,7 @@ const Routes = () => {
           <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/user/dashboard" exact component={UserDashboard} />
-          <Route path="/mood" component={MoodDetector}/>
+          <Route path="/mood" component={MoodDetector} exact/>
         </Switch>
     </BrowserRouter>
     );
