@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { GlobalContext } from "../GlobalState";
 import { withRouter } from "react-router-dom";
-import SearchBox from "./SearchBox";
+import { GlobalContext } from "../GlobalState";
 
+import SearchBox from "./SearchBox";
+import PropTypes from "prop-types";
 import {
+  withStyles,
   AppBar,
   Toolbar,
   Typography,
@@ -28,9 +30,8 @@ const styles = {
   },
 };
 
-const HideOnScroll = (props) => {
+function HideOnScroll(props) {
   const { children } = props;
-  console.log(props);
   const trigger = useScrollTrigger();
 
   return (
@@ -38,10 +39,9 @@ const HideOnScroll = (props) => {
       {children}
     </Slide>
   );
-};
+}
 
-const SimpleAppBar = (props) => {
-  console.log(props);
+function SimpleAppBar(props) {
   const [{ searchState }, dispatch] = useContext(GlobalContext);
 
   const setMenuOpen = (data) => {
@@ -89,7 +89,7 @@ const SimpleAppBar = (props) => {
             Ylight Music
           </Typography>
           <IconButton
-            // onClick={() => setSearchState('clicked')}
+            onClick={() => setSearchState("clicked")}
             color="inherit"
             aria-label="Search"
           >
@@ -103,12 +103,14 @@ const SimpleAppBar = (props) => {
   };
 
   return (
-    <HideOnScroll {...props}>
-      <AppBar id="navbar" position="sticky">
-        <Toolbar>{toggleSearch()}</Toolbar>
-      </AppBar>
-    </HideOnScroll>
+    <>
+      <HideOnScroll {...props}>
+        <AppBar id="navbar" position="sticky">
+          <Toolbar>{toggleSearch()}</Toolbar>
+        </AppBar>
+      </HideOnScroll>
+    </>
   );
-};
+}
 
 export default withRouter(SimpleAppBar);
