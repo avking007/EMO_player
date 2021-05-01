@@ -1,4 +1,4 @@
-const obj = {
+const suggestSearch = {
   baseURL: "https://suggestqueries.google.com/complete/search?",
   params: {
     hl: "en", // Language
@@ -6,5 +6,4 @@ const obj = {
     client: "youtube", // force youtube style response, i.e. jsonp
   },
 };
-
-export default obj;
+export default suggestSearch;
