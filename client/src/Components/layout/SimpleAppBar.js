@@ -3,9 +3,7 @@ import { withRouter } from "react-router-dom";
 import { GlobalContext } from "../GlobalState";
 
 import SearchBox from "./SearchBox";
-import PropTypes from "prop-types";
 import {
-  withStyles,
   AppBar,
   Toolbar,
   Typography,
@@ -42,7 +40,7 @@ function HideOnScroll(props) {
 }
 
 function SimpleAppBar(props) {
-  const [{ searchState }, dispatch] = useContext(GlobalContext);
+  const [searchState , dispatch] = useContext(GlobalContext);
 
   const setMenuOpen = (data) => {
     // console.log(data);
@@ -69,9 +67,9 @@ function SimpleAppBar(props) {
     };
 
     changeAppBar();
-    const unlisten = props.history.listen((location) => {
-      changeAppBar();
-    });
+    // const unlisten = props.history.listen((location) => {
+    //   changeAppBar();
+    // });
   }, [setSearchState, props.history]);
 
   const toggleSearch = () => {
