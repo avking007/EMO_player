@@ -1,9 +1,11 @@
+import Routes from "./Routes";
+import { GlobalState } from "./Compenents/GlobalState";
 
 function App() {
   return (
-    <div className="App">
-      <h1>hey</h1>
-    </div>
+    <GlobalState>
+      <Routes />
+    </GlobalState>
   );
 }
 

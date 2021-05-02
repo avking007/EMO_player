@@ -1,44 +1,36 @@
-
-
-body{
-  background-color: 	#3a3b3c;
+body {
+  background-color: #3a3b3c;
 
   margin: 0;
-  font-family: 'Balsamiq Sans', cursive;
-
+  font-family: "Balsamiq Sans", cursive;
 }
 
-.Block_one{
+.Block_one {
   padding: 2%;
-  width:50vw;
-  height:50vh;
-  float:left;
-  color:	#e4e6eb;
-  
+  width: 50vw;
+  height: 50vh;
+  float: left;
+  color: #e4e6eb;
 }
-.Block_two{
-
-  width:50vw;
-  height:50vh;
-  
+.Block_two {
+  width: 50vw;
+  height: 50vh;
 }
-footer{
+footer {
   background-color: #e4e6eb;
   color: #3a3b3c;
-position:absolute;
-  left:0;
-  bottom:1vh;
+  position: absolute;
+  left: 0;
+  bottom: 1vh;
   width: 100%;
-
 }
-.Heading> h1{
+.Heading > h1 {
   font-size: 3em;
-  text-shadow: 5px 8px 15px black
+  text-shadow: 5px 8px 15px black;
 }
-.Main{
+.Main {
   font-size: 3.5em;
 }
-.form-control{
+.form-control {
   background-color: #e4e6eb;
-
 }
