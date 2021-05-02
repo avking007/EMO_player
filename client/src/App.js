@@ -1,5 +1,5 @@
 import Routes from "./Routes";
-import { GlobalState } from "./Compenents/GlobalState";
+import { GlobalState } from "./Components/GlobalState";
 
 function App() {
   return (
