@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./Home";
-import SignIn from "./Compenents/Auth/SignIn/SignIn";
-import SignUp from "./Compenents/Auth/SignUp/SignUp";
-import SimpleAppBar from "./Compenents/Layout/SimpleAppBar";
-import SwipeMenu from "./Compenents/Layout/SwipeMenu";
-import CurrentSection from "./Compenents/CurrentSection";
+import SignIn from "./Components/Auth/SignIn/SignIn";
+import SignUp from "./Components/Auth/SignUp/SignUp";
+import SimpleAppBar from "./Components/Layout/SimpleAppBar";
+import SwipeMenu from "./Components/Layout/SwipeMenu";
+import CurrentSection from "./Components/CurrentSection";
 
 const Routes = () => {
   return (
