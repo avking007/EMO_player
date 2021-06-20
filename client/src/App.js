@@ -1,11 +1,15 @@
 import Routes from "./Routes";
+import { Provider } from "react-redux";
 import { GlobalState } from "./Components/GlobalState";
+import store from './store';
 
-function App() {
+const App = () => {
   return (
-    <GlobalState>
-      <Routes />
-    </GlobalState>
+    <Provider store={store}>
+      <GlobalState>
+        <Routes />
+      </GlobalState>
+    </Provider>
   );
 }
 
