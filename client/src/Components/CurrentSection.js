@@ -8,14 +8,12 @@ import React, {
 } from "react";
 
 import {
-  BrowserRouter as Router,
   withRouter,
   Route,
   Link,
   Switch,
 } from "react-router-dom";
 
-import { AnimatePresence } from "framer-motion";
 import {
   Tabs,
   Tab,
@@ -27,7 +25,6 @@ import {
 import {
   Home,
   Favorite,
-  VideoLibrary,
   History,
   GetApp,
 } from "@material-ui/icons/";
@@ -48,6 +45,7 @@ import MoodDetector from "./MoodDetector/MoodDetector";
 import Signup from "./auth/SignUp/SignUp";
 import Signin from "./auth/SignIn/SignIn";
 // pages
+const LandingPage = lazy(() => import("../Components/Layout/Home"));
 const LoginPage = lazy(() => import("./LoginPage"));
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
 const SearchResult = lazy(() => import("./SearchResult"));
@@ -178,7 +176,7 @@ const CurrentSection = ({ history, location }) => {
         // console.log(previousLocation);
       }
     });
-  }, []);
+  }, [history, location]);
 
   useEffect(() => {
     // we will redirect everytime user comes to root page
@@ -232,7 +230,7 @@ const CurrentSection = ({ history, location }) => {
     <div>
       <Suspense fallback={circularLoader}>
         <Switch location={checkPrevLocation()}>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={LandingPage} />
           <Route path="/signin" exact component={Signin} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/mood" component={MoodDetector} exact />
@@ -292,16 +290,6 @@ const CurrentSection = ({ history, location }) => {
               );
             }}
           />
-          <Route
-            path="/app"
-            render={(props) => {
-              window.location.replace(
-                "https://play.google.com/store/apps/details?id=com.ylightmusic.app"
-              );
-              return <div>Redirecting you to play store</div>;
-            }}
-          />
-
           <Route path="/settings" component={SettingsPage} />
           <Route path="/privacy" component={PrivacyPage} />
 

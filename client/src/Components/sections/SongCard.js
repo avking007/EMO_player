@@ -25,6 +25,7 @@ const useStyles = makeStyles({
   },
 });
 const MediaCard = ({ songs, categotyTitle }) => {
+  // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });

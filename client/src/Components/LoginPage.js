@@ -1,13 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "./GlobalState";
+import React from "react";
 
 import { Button, Grid, Typography } from "@material-ui/core";
 import { NavigateNext } from "@material-ui/icons";
 import bgImg from "../images/music-bg.svg";
-import gIcon from "../images/google.svg";
 import handcraftedText from "../images/craftedImg.png";
 
-// import GoogleSignIn from "./GoogleSignIn";
 
 const bgStyle = {
   background: `url(${bgImg}) no-repeat`,
@@ -19,12 +16,6 @@ const bgStyle = {
 
 
 const LoginPage = ({ continueToHome }) => {
-  // const showSignIn = () => {
-  //   // if user has already closed the popup dont show it
-  //   if (localStorage.getItem("signInClosed") !== "true") {
-  //     return <GoogleSignIn />;
-  //   }
-  // };
 
   return (
     <Grid
@@ -34,7 +25,6 @@ const LoginPage = ({ continueToHome }) => {
       justify="space-around"
       alignItems="center"
     >
-      {/* {showSignIn()} */}
 
       <div style={bgStyle} />
 

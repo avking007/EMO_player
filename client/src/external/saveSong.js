@@ -1,7 +1,5 @@
 import Dexie from "dexie";
 import "dexie-observable";
-import { promised } from "q";
-import { promises } from "fs";
 
 // Define your database
 export const db = new Dexie("Song_Database");
@@ -80,7 +78,7 @@ export const getDownloadedSongs = async () => {
 
 export const removeDownloadingState = async () => {
   // find all the downloadState which is downloading and remove that
-  const songs = await db.songs
+  await db.songs
     .where("[downloadState+timestamp]")
     .between(["downloading", Dexie.minKey], ["downloading", Dexie.maxKey])
     .modify((x) => {

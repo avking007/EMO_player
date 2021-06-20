@@ -4,7 +4,11 @@
   "description": "Emotion based music player",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "install:client": "npm install --prefix client",
+    "install:server": "npm install",
+    "dev": "concurrently \"npm run server\" \"npm run  client\""
   },
   "author": "Anish,meghna,Charu",
   "license": "ISC",

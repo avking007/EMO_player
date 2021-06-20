@@ -1,10 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-// import {
-//   List,
-//   AutoSizer,
-//   CellMeasurer,
-//   CellMeasurerCache
-// } from "react-virtualized";
 
 import { DynamicSizeList as List } from 'react-window-dynamic';
 
@@ -27,17 +21,10 @@ import { GlobalContext } from './GlobalState';
 import getAudioLink from '../apis/getAudioLink';
 import { downloadSong, deleteSongAudio } from '../external/saveSong';
 
-// const cache = new CellMeasurerCache({
-//   minHeight: 50,
-//   defaultHeight: 60,
-//   fixedWidth: true
-//   // keyMapper: () => 1
-// });
-
 let currentId;
 
 export const useSongMethods = (songId) => {
-  const [{}, dispatch] = useContext(GlobalContext);
+  const [, dispatch] = useContext(GlobalContext);
 
   const setSnackbarMsg = React.useCallback(
     (data) => {
@@ -63,11 +50,10 @@ export const useSongMethods = (songId) => {
     });
     // first we will fetch the song link then we will download it
     // the download song function takes id and the url
-    const status = await downloadSong(songId, res.data);
+    await downloadSong(songId, res.data);
     // after the downloading is done we will remove the downloading class
     // set the snackbar message
     setSnackbarMsg('Song Downloaded');
-    // console.log("song status", status);
   };
 
   const disablePopup = () => {
@@ -76,7 +62,7 @@ export const useSongMethods = (songId) => {
   };
 
   const deleteTheSong = async (checkBox) => {
-    const deleted = await deleteSongAudio(currentId);
+    await deleteSongAudio(currentId);
     setDeleteDialogState(false);
     setSnackbarMsg('Deleted Successfully');
 
@@ -118,15 +104,10 @@ export const useSongMethods = (songId) => {
 
 const RenderDatabase = (props) => {
   const songs = props.songs;
-  const [{}, dispatch] = useContext(GlobalContext);
+  const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
-  const setSnackbarMsg = (data) => {
-    dispatch({ type: 'setSnakbarMsg', snippet: data });
-  };
-
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const handleClick = (song) => {
     // set all the info of current clicked video in this object
@@ -157,10 +138,6 @@ const RenderDatabase = (props) => {
     }
   };
 
-  useEffect(() => {
-    setWindowHeight(window.innerHeight);
-  });
-
   const renderResult = songs.map((song, index) => {
     return (
       <>
@@ -168,8 +145,6 @@ const RenderDatabase = (props) => {
           alignItems="flex-start"
           button
           onClick={() => handleClick(song)}
-          // component={Link}
-          // to={{ pathname: "/play", search: `?id=${song.videoId}`, state: { modal: true } }}
         >
           <ListItemAvatar>
             <Avatar

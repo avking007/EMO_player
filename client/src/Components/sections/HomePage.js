@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from '@material-ui/core';
 
 import SongCard from './SongCard';
 
@@ -15,13 +14,11 @@ const playlistsIds = {
   Reggaeton: 'PLS_oEMUyvA728OZPmF9WPKjsGtfC75LiN',
 };
 
-let slowConnectionTimeout;
 const HomePage = () => {
   // for home playlist
   const [songObj, setSongObj] = useState({});
 
   const fetchFromApi = () => {
-    slowConnectionTimeout = setTimeout(() => {}, 5000);
 
     const getTrendingMusic = async () => {
       const res = await youtubeSearch.get('videos', {
