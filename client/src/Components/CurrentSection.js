@@ -44,6 +44,7 @@ import MainPlayer from "./player/MainPlayer";
 import MoodDetector from "./MoodDetector/MoodDetector";
 import Signup from "./auth/SignUp/SignUp";
 import Signin from "./auth/SignIn/SignIn";
+import PrivateRoute from "./Routes/PrivateRoute";
 // pages
 const LandingPage = lazy(() => import("../Components/Layout/Home"));
 const LoginPage = lazy(() => import("./LoginPage"));
@@ -242,18 +243,18 @@ const CurrentSection = ({ history, location }) => {
               return <LoginPage continueToHome={continueToHome} />;
             }}
           />
-          <Route
+          <PrivateRoute
             path="/search"
             render={(props) => <SearchResult videos={searchResult} />}
           />
-          <Route
+          <PrivateRoute
             path="/home"
             render={(props) => {
               setTabValue(0);
               return <HomePage />;
             }}
           />
-          <Route
+          <PrivateRoute
             path="/liked"
             render={(props) => {
               setTabValue(1);
@@ -266,7 +267,7 @@ const CurrentSection = ({ history, location }) => {
               );
             }}
           />
-          <Route
+          <PrivateRoute
             path="/downloads"
             render={(props) => {
               setTabValue(2);
@@ -278,7 +279,7 @@ const CurrentSection = ({ history, location }) => {
               );
             }}
           />
-          <Route
+          <PrivateRoute
             path="/history"
             render={(props) => {
               setTabValue(3);
