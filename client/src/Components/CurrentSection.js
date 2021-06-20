@@ -45,6 +45,7 @@ import MoodDetector from "./MoodDetector/MoodDetector";
 import Signup from "./auth/SignUp/SignUp";
 import Signin from "./auth/SignIn/SignIn";
 // pages
+const LandingPage = lazy(() => import("../Components/Layout/Home"));
 const LoginPage = lazy(() => import("./LoginPage"));
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
 const SearchResult = lazy(() => import("./SearchResult"));
@@ -229,7 +230,7 @@ const CurrentSection = ({ history, location }) => {
     <div>
       <Suspense fallback={circularLoader}>
         <Switch location={checkPrevLocation()}>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={LandingPage} />
           <Route path="/signin" exact component={Signin} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/mood" component={MoodDetector} exact />
