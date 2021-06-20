@@ -44,6 +44,9 @@ import {
 import SettingsPage from "./sections/SettingsPage";
 // import the db from save song
 import MainPlayer from "./player/MainPlayer";
+import MoodDetector from "./MoodDetector/MoodDetector";
+import Signup from "./auth/SignUp/SignUp";
+import Signin from "./auth/SignIn/SignIn";
 // pages
 const LoginPage = lazy(() => import("./LoginPage"));
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
@@ -182,7 +185,6 @@ const CurrentSection = ({ history, location }) => {
     if (redirectState && history.location.pathname === "/") {
       history.replace("/home");
     }
-
     // if the location is not play then we will push new location
   }, [setRedirectState, history, redirectState]);
 
@@ -230,6 +232,11 @@ const CurrentSection = ({ history, location }) => {
     <div>
       <Suspense fallback={circularLoader}>
         <Switch location={checkPrevLocation()}>
+          <Route path="/" exact component={Home} />
+          <Route path="/signin" exact component={Signin} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/mood" component={MoodDetector} exact />
+
           <Route
             exact
             path="/"
