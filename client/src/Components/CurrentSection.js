@@ -41,9 +41,8 @@ import {
 import SettingsPage from "./sections/SettingsPage";
 // import the db from save song
 import MainPlayer from "./player/MainPlayer";
+import { signin, signup } from "../helper/auth";
 import MoodDetector from "./MoodDetector/MoodDetector";
-import Signup from "./auth/SignUp/SignUp";
-import Signin from "./auth/SignIn/SignIn";
 // pages
 const LandingPage = lazy(() => import("../Components/Layout/Home"));
 const LoginPage = lazy(() => import("./LoginPage"));
@@ -58,7 +57,7 @@ const ContributorsPage = lazy(() => import("./sections/ContributorsPage"));
 // custom styling the tab menus
 const CustomTab = withStyles({
   root: {
-    background: "#e91e63",
+    background: "#191414",
     position: "fixed",
     bottom: "0",
     padding: 0,
@@ -75,19 +74,21 @@ const CustomTab = withStyles({
 
 const CustomTabs = withStyles({
   root: {
-    color: "#FFB2C1",
+    color: "#1db954",
+    fontWeight:"bold",
     fontSize: ".75rem",
     margin: 0,
 
     "&:hover": {
-      color: "#ffffffed",
+      color: "#e4e6eb",
+      textDecoration:"none",
       opacity: 1,
     },
     "&$selected": {
-      color: "#fff",
+      color: "#b3b3b3",
     },
     "&:focus": {
-      color: "#FFFFFF",
+      color: "#b3b3b3",
     },
   },
 
@@ -115,7 +116,7 @@ const CurrentSection = ({ history, location }) => {
 
   const circularLoader = (
     <Grid
-      style={{ height: "100vh" }}
+      style={{ height: "109vh" }}
       container
       justify="center"
       alignItems="center"
@@ -231,8 +232,8 @@ const CurrentSection = ({ history, location }) => {
       <Suspense fallback={circularLoader}>
         <Switch location={checkPrevLocation()}>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/signin" exact component={Signin} />
-          <Route path="/signup" exact component={Signup} />
+          <Route path="/signin" exact component={signin} />
+          <Route path="/signup" exact component={signup} />
           <Route path="/mood" component={MoodDetector} exact />
 
           <Route

@@ -22,6 +22,7 @@ const styles = {
   title: {
     textAlign: "center",
     width: "calc(100% - 96px)",
+    color:"	#1db954"
   },
   input: {
     color: "#fff",
@@ -80,16 +81,18 @@ function SimpleAppBar(props) {
             color="inherit"
             aria-label="Menu"
             onClick={() => setMenuOpen(true)}
+            style={{color:"	#1db954"}}
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" color="inherit" style={styles.title}>
-            Ylight Music
+          <Typography variant="h6" color="green"  style={styles.title}>
+            Emolight Music
           </Typography>
           <IconButton
             onClick={() => setSearchState("clicked")}
             color="inherit"
             aria-label="Search"
+            style={{color:"	#1db954"}}
           >
             <Search />
           </IconButton>
@@ -103,7 +106,7 @@ function SimpleAppBar(props) {
   return (
     <>
       <HideOnScroll {...props}>
-        <AppBar id="navbar" position="sticky">
+        <AppBar id="navbar" position="sticky" style={{ background: '	#121212' }}>
           <Toolbar>{toggleSearch()}</Toolbar>
         </AppBar>
       </HideOnScroll>

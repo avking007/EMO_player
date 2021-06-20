@@ -1,20 +1,22 @@
 body {
   background-color: #3a3b3c;
-
   margin: 0;
   font-family: "Balsamiq Sans", cursive;
 }
 
 .Block_one {
   padding: 2%;
-  width: 50vw;
+  width: 93vw;
   height: 50vh;
-  float: left;
   color: #e4e6eb;
+  text-align: center;
 }
+
 .Block_two {
-  width: 50vw;
+  float: left;
+  width: 40vw;
   height: 50vh;
+  background-color: green;
 }
 footer {
   background-color: #e4e6eb;
