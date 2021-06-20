@@ -1,6 +1,8 @@
+import Menu  from "../../core/Menu";
 import React from "react";
 import "../../App.css";
 import Base from "../../core/Base";
+
 const Home = () => {
   return (
     <Base>
@@ -14,8 +16,9 @@ const Home = () => {
           (An application that suggest songs based on your mood by capturing
           facial expressions.)
         </p>
+        <span className="text-muted">An amazing site for music fanatics..</span>
       </div>
-      <div className="Block_two"></div>
+      <Menu />
     </Base>
   );
 };

@@ -63,7 +63,7 @@ const MediaCard = ({ songs, categotyTitle }) => {
   if (songs) {
     const renderCards = songs.map((song) => {
       return (
-        <Card className={classes.card} key={song.id}>
+        <Card className={classes.card} key={song.id} 	style={{backgroundColor:"	#b3b3b3", color:"	#212121"}}>
           <CardActionArea onClick={() => handleClick(song)}>
             <CardMedia
               className={classes.media}
@@ -82,7 +82,7 @@ const MediaCard = ({ songs, categotyTitle }) => {
     });
     return (
       <>
-        <Typography variant="h5" style={{ marginLeft: '15px' }}>
+        <Typography variant="h5" style={{ marginLeft: '15px', color:'#e4e6eb' }}>
           {categotyTitle}
         </Typography>
         <div className={'cardSlider'}>{renderCards}</div>
