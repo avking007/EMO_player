@@ -4,7 +4,6 @@ import { SkipNext, Close } from "@material-ui/icons";
 import PlayPauseButton from "./PlayPauseButton";
 import "./MiniMusicStyle.css";
 
-const styles = {};
 
 const MiniMuiscArt = ({ playPause, data, playNext, emptyPlayer }) => {
   const getThumbnail = () => {

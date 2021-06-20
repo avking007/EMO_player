@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   Switch,
   DialogActions,
   Button,
   FormControlLabel,
-  FormControl,
-  DialogTitle,
   Typography,
 } from "@material-ui/core";
 import { TimerOff, Timer } from "@material-ui/icons";
@@ -55,10 +53,9 @@ function SleepTimer({ player }) {
 
     //only set timer when there is no timer
     if (sleepTimerObj && sleepTimerObj.alwaysOn) {
-      // console.log(sleepTimerObj);
       setTimer(sleepTimerObj.time);
     }
-    // console.log(sleepTimerObj);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSetTimer = () => {

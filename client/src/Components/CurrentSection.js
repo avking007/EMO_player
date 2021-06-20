@@ -8,14 +8,12 @@ import React, {
 } from "react";
 
 import {
-  BrowserRouter as Router,
   withRouter,
   Route,
   Link,
   Switch,
 } from "react-router-dom";
 
-import { AnimatePresence } from "framer-motion";
 import {
   Tabs,
   Tab,
@@ -27,7 +25,6 @@ import {
 import {
   Home,
   Favorite,
-  VideoLibrary,
   History,
   GetApp,
 } from "@material-ui/icons/";
@@ -175,7 +172,7 @@ const CurrentSection = ({ history, location }) => {
         // console.log(previousLocation);
       }
     });
-  }, []);
+  }, [history, location]);
 
   useEffect(() => {
     // we will redirect everytime user comes to root page
@@ -285,16 +282,6 @@ const CurrentSection = ({ history, location }) => {
               );
             }}
           />
-          <Route
-            path="/app"
-            render={(props) => {
-              window.location.replace(
-                "https://play.google.com/store/apps/details?id=com.ylightmusic.app"
-              );
-              return <div>Redirecting you to play store</div>;
-            }}
-          />
-
           <Route path="/settings" component={SettingsPage} />
           <Route path="/privacy" component={PrivacyPage} />
 

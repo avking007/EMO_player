@@ -18,6 +18,7 @@ import youtubeSearch from "../../apis/youtubeSearch";
 import jsonp from "jsonp";
 
 const SearchBox = ({ history, location }) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   let params = new URLSearchParams(location.search);
 
   const [{ searchState }, dispatch] = useContext(GlobalContext);
@@ -136,21 +137,8 @@ const SearchBox = ({ history, location }) => {
       setYtSearchQuery(query);
       setSearchQuery(query);
       setSearchState("searching");
-      // console.log('changing query to', query);
     }
-
-    // const unlisten = history.listen(location => {
-    //   // setYtSearchQuery(params.get("q"));
-    //   // we will se the q from params
-    //   // location is an object like window.location
-    //   const path = location.pathname;
-    //   // if (path.slice(1, 7) === "search" || path.slice(1, 5) === "song") {
-    //   //   setSearchState("searched");
-    //   // } else {
-    //   //   setSearchState("home");
-    //   // }
-    // });
-  }, [setSearchState, setYtSearchQuery]);
+  }, [params, setSearchState, setYtSearchQuery]);
 
   // show loading icon while we fetch the results from api
 
