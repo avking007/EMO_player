@@ -1,10 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
-  IconButton,
   Grid,
-  Slider,
   LinearProgress,
-  makeStyles,
   withStyles
 } from "@material-ui/core/";
 
@@ -13,12 +10,9 @@ import {
   GetApp,
   Reply,
   DoneOutline,
-  Done,
-  AlarmOff
 } from "@material-ui/icons/";
 import VolumeController from "./VolumeController";
 import { useSongMethods } from "../RenderDatabase";
-import { downloadSong } from "../../external/saveSong";
 import SleepTimer from './SleepTimer'
 import { GlobalContext } from "../GlobalState";
 
@@ -47,7 +41,7 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
       setSongDownloaded(true);
       setSongDownloading(false);
     }
-  }, [snackbarMsg]);
+  }, [snackbarMsg, song.audio]);
   // if the song is downloaded we will change
 
   // share prompt using chrome web api

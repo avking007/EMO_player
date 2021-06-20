@@ -50,7 +50,6 @@ const MainPlayer = ({ location, history }) => {
   const [isRepeatOn, setIsRepeatOn] = useState(false);
   const [rating, setRating] = useState("none");
   const [isNextFromMini, setIsNextFromMini] = useState(false);
-  const [audioURL, setAudioURL] = useState(null);
   const body = document.querySelector("body");
 
   const audioPlayer = useRef();
@@ -127,7 +126,6 @@ const MainPlayer = ({ location, history }) => {
       });
 
       // set the audio data
-      const proxyURL = "https://server.ylight.xyz/proxy/";
       audioPlayer.current.src = res.data;
       playAudio();
 
@@ -166,7 +164,6 @@ const MainPlayer = ({ location, history }) => {
       if (!isNextFromMini) {
         // if the click is not from playlist then only we will search for realated video
         if (!isItFromPlaylist) {
-          // // console.log("searching for related vids", relatedVideos);
           // if player is in playlist mode we will just replace history else push it
           if (location.pathname !== "/play") {
             // prevent duplicating history
@@ -185,19 +182,14 @@ const MainPlayer = ({ location, history }) => {
 
     // set rating to none when we load new song
     setRating("none");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentVideoSnippet, setIsItFromPlaylist]);
-
-  // useEffect(() => {
-  //   // console.log("from playlist", isItFromPlaylist);
-  // }, [isItFromPlaylist]);
 
   useEffect(() => {
     relatedVideosVar = relatedVideos;
-    // console.log("related", relatedVideos);
   }, [relatedVideos]);
 
   useEffect(() => {
-    // console.log("isnext state", isNextFromMini);
   }, [isNextFromMini]);
 
   const setAudioSrcAndPlay = async (id) => {
@@ -406,7 +398,7 @@ const MainPlayer = ({ location, history }) => {
     // we will only change if its push  otherwise while changing song from playlist changes the state
 
     // Listen for changes to the current location.
-    const unlisten = history.listen((location) => {
+    history.listen((location) => {
       // location is an object like window.location
       if (location.pathname === "/play") {
         // we will only change if its push  otherwise while changing song from playlist changes the state
@@ -416,14 +408,12 @@ const MainPlayer = ({ location, history }) => {
         }
       } else {
         setPlayerState("minimized");
-        // console.log("set player state to minimized");
       }
-      // console.log(history);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
 
   useEffect(() => {
-    // console.log(playerState);
   }, [playerState]);
 
   const returnMinMaxClass = () => {

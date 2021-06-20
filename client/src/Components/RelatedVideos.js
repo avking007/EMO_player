@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 
 import {
@@ -9,7 +8,6 @@ import {
   ListItemIcon,
   ListItemText,
   Grid,
-  Divider,
   LinearProgress,
 } from "@material-ui/core";
 
@@ -49,7 +47,7 @@ const RelatedVideos = ({
   setIsRepeatOn,
   isRepeatOn,
 }) => {
-  const [{}, dispatch] = useContext(GlobalContext);
+  const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: "setCurrentVideoSnippet", snippet: data });
   };

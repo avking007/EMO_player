@@ -2,9 +2,7 @@ import React, { useState, useContext, useEffect, useCallback } from "react";
 
 import {
   SwipeableDrawer,
-  Avatar,
   Divider,
-  Button,
   List,
   ListItem,
   ListItemIcon,
@@ -13,7 +11,6 @@ import {
 } from "@material-ui/core";
 
 import {
-  AccountCircle,
   Feedback,
   Info,
   FreeBreakfast,

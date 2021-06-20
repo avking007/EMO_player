@@ -24,7 +24,6 @@ function isDblTouchTap(event) {
   return isFastDblTouchTap;
 }
 
-let initialPosition;
 
 const MusicArt = ({ data, rating, audioEl }) => {
   const swipeUpHandler = useSwipeable({
@@ -36,13 +35,6 @@ const MusicArt = ({ data, rating, audioEl }) => {
   const [heartStyle, setHeartStyle] = useState({
     transform: "scale(0)"
   });
-  // const [artContainerStyle, setArtContainerStyle] = useState({
-  //   background: `url(${circleSvg}) no-repeat`,
-  //   padding: "18px",
-  //   position: "relative",
-  //   // transition: "transform 100ms",
-  //   // transform: "translateY(0)"
-  // });
 
   const artContainerStyle = {
     background: `url(${circleSvg}) no-repeat`,

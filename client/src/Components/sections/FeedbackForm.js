@@ -1,10 +1,8 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import {
-  FormControl,
   TextField,
   Button,
   Grid,
-  CircularProgress,
   LinearProgress,
 } from '@material-ui/core';
 import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3';
@@ -13,6 +11,7 @@ import { GlobalContext } from '../GlobalState';
 
 let captchaToken;
 const FeedbackForm = () => {
+  // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
 
   const setSnackbarMsg = React.useCallback(

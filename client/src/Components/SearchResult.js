@@ -45,6 +45,7 @@ const ulVariants = {
 const SearchResult = ({ videos }) => {
   const [isOpen, setisOpen] = useCycle(false, true);
 
+  // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
@@ -66,21 +67,18 @@ const SearchResult = ({ videos }) => {
 
   React.useEffect(() => {
     setTimeout(() => {}, 100);
-    // console.log('isopen cycle', isOpen);
     setisOpen(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderResult = videos.map((video) => {
     const { snippet } = video;
-    // console.log('render result times');
     return (
       <motion.div variants={liVariants} key={video.id.videoId}>
         <ListItem
           alignItems="flex-start"
           button
           onClick={() => handleClick(video)}
-          // component={Link}
-          // to={{pathname: "/play", search:`?id=${video.id.videoId}`}}
         >
           <ListItemAvatar>
             <Avatar

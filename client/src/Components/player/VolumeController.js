@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton, Grid, Slider } from "@material-ui/core/";
+import { Grid, Slider } from "@material-ui/core/";
 import { VolumeUp } from "@material-ui/icons/";
 
 const VolumeController = ({ player, setPlayerState }) => {
