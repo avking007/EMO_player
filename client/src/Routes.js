@@ -12,13 +12,9 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <SimpleAppBar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/signin" exact component={SignIn} />
-        <Route path="/signup" exact component={SignUp} />
-        <Route path="/home" exact component={CurrentSection} />
-        <Route path="/mood" component={MoodDetector} exact />
-      </Switch>
+
+      <Route component={CurrentSection} />
+
       <SwipeMenu />
     </BrowserRouter>
   );
