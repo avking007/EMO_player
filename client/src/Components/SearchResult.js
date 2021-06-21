@@ -45,8 +45,7 @@ const ulVariants = {
 const SearchResult = ({ videos }) => {
   const [isOpen, setisOpen] = useCycle(false, true);
 
-  // eslint-disable-next-line no-empty-pattern
-  const [{}, dispatch] = useContext(GlobalContext);
+  const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
@@ -66,7 +65,6 @@ const SearchResult = ({ videos }) => {
   };
 
   React.useEffect(() => {
-    setTimeout(() => {}, 100);
     setisOpen(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
