@@ -112,7 +112,6 @@ const HomePage = () => {
 
       <SongCard songs={songObj.romanticSongs} categotyTitle={"Romantic Mood"} />
 
-      {/* <SongCard songs={songObj.topBolloywood} categotyTitle={'Top Bollywood'} /> */}
     </>
   );
 };
