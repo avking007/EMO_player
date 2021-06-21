@@ -4,6 +4,7 @@ import { GlobalState } from "./Components/GlobalState";
 import store from './store';
 import { useEffect } from "react";
 import { loadUser } from "./actions/auth";
+import './App.css';
 
 const App = () => {
   
