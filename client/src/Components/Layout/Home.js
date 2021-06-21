@@ -1,8 +1,13 @@
 import Menu from "../../core/Menu";
 import React from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
 import "../../App.css";
 
-const Home = () => {
+const Home = ({isAuthenticated}) => {
+  if(isAuthenticated) {
+    return <Redirect to ='/home' />
+  }
   return (
     <div className="container-fluid p-4">
       <div className="bg-dark text-white p-4">
@@ -25,4 +30,8 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapper = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapper)(Home);
