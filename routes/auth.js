@@ -13,7 +13,7 @@ const router = express.Router();
 // desc : get user by user_id
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select('-password');
     return res.json({ user });
   } catch (error) {
     console.log(error);
