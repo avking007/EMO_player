@@ -1,22 +1,32 @@
-import React from 'react'
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { isAutheticated } from '../../helper/auth';
+import { connect } from 'react-redux';
 
 const PrivateRoute = ({
-    component: Component,
-    ...rest
-  }) => (
+  component: Component,
+  isAuthenticated,
+  render: Renderer,
+  ...rest
+}) => {
+  const renderComponent = (props) => Component ? (
+    <Component {...props} /> ) : (
+      Renderer()
+    )
+ 
+  return (
     <Route
       {...rest}
       render={(props) =>
-        !isAutheticated()  ? (
+        !isAuthenticated ? (
           <Redirect to='/signin' />
-        ) : (
-          <Component {...props} />
-        )
+        ) : renderComponent(props)
       }
     />
   );
-  
+}
 
-export default PrivateRoute;
+const mapper = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapper)(PrivateRoute);
