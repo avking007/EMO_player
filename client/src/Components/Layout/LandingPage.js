@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import "../../App.css";
 
-const Home = ({isAuthenticated}) => {
+const LandingPage = ({isAuthenticated}) => {
   if(isAuthenticated) {
     return <Redirect to ='/home' />
   }
@@ -34,4 +34,4 @@ const mapper = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapper)(Home);
+export default connect(mapper)(LandingPage);
