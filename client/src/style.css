@@ -124,7 +124,6 @@ svg.songHeart.left {
 
 .RelatedVideoContainer {
   background: #e91d63;
-  overflow: auto;
   height: calc(100% - 200px);
   height: 100%;
   min-height: 470px;
@@ -156,10 +155,6 @@ div.RelatedVideoContainer * {
 
 .playlistHeader h6 {
   margin-right: 50px;
-}
-
-.playlistHeader svg {
-  /* font-size: 1.8em; */
 }
 
 /* hide recaptcha badge */
