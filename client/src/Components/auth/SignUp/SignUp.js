@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { signUp } from '../../../actions/auth';
 
 
-const SignUp = ({isAuthenticated, signUp}) => {
+const SignUp = ({ isAuthenticated, signUp }) => {
 
   const [user, setUser] = useState({
     first_name: "",
@@ -83,4 +83,4 @@ const mapper = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapper, {signUp})(SignUp);
+export default connect(mapper, { signUp })(SignUp);
