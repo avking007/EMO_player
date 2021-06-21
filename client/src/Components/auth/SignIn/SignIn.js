@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
 import { login } from '../../../actions/auth';
 
-const SignIn = ({ isAutheticated, login }) => {
+const SignIn = ({ isAuthenticated, login }) => {
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -18,7 +18,7 @@ const SignIn = ({ isAutheticated, login }) => {
     login(user);
   };
 
-  if (isAutheticated) {
+  if (isAuthenticated) {
     return <Redirect to='/home' />
   }
 
@@ -60,7 +60,7 @@ const SignIn = ({ isAutheticated, login }) => {
 };
 
 const mapper = (state) => ({
-  isAutheticated: state.auth.isAutheticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapper, { login })(SignIn);
