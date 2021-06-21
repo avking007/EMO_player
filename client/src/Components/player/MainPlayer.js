@@ -221,15 +221,10 @@ const MainPlayer = ({ location, history }) => {
   const playNext = () => {
     // also set this is from playlist
     setIsItFromPlaylist(true);
-    // console.log("play next related videos", relatedVideos);
-    // find the index of playing song in the playlist
     const currentIndex = relatedVideosVar.findIndex(
       (video) => video.id.videoId === currentVideoSnippet.id
     );
-    // console.log("the current index is", currentIndex);
-
     let video;
-    // console.log("hey we will play next song");
     video = relatedVideosVar[currentIndex + 1]; //we will play the next song
 
     setVideoSnippet(video);
@@ -256,14 +251,7 @@ const MainPlayer = ({ location, history }) => {
   };
 
   let playerStyle = {
-    position: "fixed",
-    right: 0,
-    bottom: 0,
-    background: "#fff",
-    width: "100%",
-    height: "100%",
     zIndex: 1400,
-    display: "inline block",
     transition: "all .3s ease",
   };
 
@@ -276,10 +264,6 @@ const MainPlayer = ({ location, history }) => {
     } else {
       playerStyle.background = "#e91e63";
     }
-    // playerStyle.bottom = "48px";
-    // calculate the top height and we are subtracting 148px becz
-    // 48 is the value of menu bar and 100px is minimized height
-    // make body overflow scroll 😝
     body.style.overflow = "auto";
   }
 
@@ -391,12 +375,9 @@ const MainPlayer = ({ location, history }) => {
 
   useEffect(() => {
     if (location.pathname === "/play" && !currentVideoSnippet.id) {
-      // console.log("history is in play fetching song");
-
       fetchAndSetCurrentVideoSnippet(params.get("id")); // math will give the song id from
     }
     // we will only change if its push  otherwise while changing song from playlist changes the state
-
     // Listen for changes to the current location.
     history.listen((location) => {
       // location is an object like window.location
@@ -404,7 +385,6 @@ const MainPlayer = ({ location, history }) => {
         // we will only change if its push  otherwise while changing song from playlist changes the state
         if (history.action !== "REPLACE") {
           setPlayerState("maximized");
-          // console.log("set player state to maximized");
         }
       } else {
         setPlayerState("minimized");
@@ -435,6 +415,7 @@ const MainPlayer = ({ location, history }) => {
             style={{
               height: " calc(100vh - 46px)",
               justifyContent: "space-evenly",
+              ...playerStyle
             }}
           >
             <TopBar
@@ -540,10 +521,7 @@ const MainPlayer = ({ location, history }) => {
 
   return (
     <div
-      // drag="y"
-      // dragConstraints={{ top: 0, bottom: 600 }}
       ref={containerRef}
-      // style={playerStyle}
       onClick={expandPlayer}
       className={"mediaPlayerContainer " + returnMinMaxClass()}
     >
