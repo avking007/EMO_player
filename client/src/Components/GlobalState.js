@@ -9,7 +9,7 @@ const initialState = {
   menuOpen: false,
   snackbarMsg: false,
   currentVideoSnippet: {},
-  themeSelectValue: "Default",
+  themeSelectValue: "Dark",
 };
 
 const reducer = (state = initialState, action) => {
