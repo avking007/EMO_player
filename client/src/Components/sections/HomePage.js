@@ -79,8 +79,6 @@ const HomePage = () => {
       const timeElapsedInHr = timeElapsed / (1000 * 60 * 60); //convert ms into hr
 
       // if time is more than 12 hr we will fetch from the api
-
-      // console.log("Saved song", savedSongs);
       if (timeElapsedInHr > 12 || !savedSongs.latestSongs) {
         fetchFromApi();
         localStorage.setItem("trackTime", startingTime); //dont forgot to update the time
@@ -111,7 +109,8 @@ const HomePage = () => {
       <SongCard songs={songObj.latestSongs} categotyTitle={"Latest Music"} />
 
       <SongCard songs={songObj.romanticSongs} categotyTitle={"Romantic Mood"} />
-
+      <br />
+      <br />
     </>
   );
 };
