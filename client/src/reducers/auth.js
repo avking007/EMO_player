@@ -2,7 +2,7 @@ import { LOGIN_FAIL, LOGIN_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED } f
 
 const initState = {
     token: localStorage.getItem('token'),
-    isAuthenticated: null,
+    isAuthenticated: false,
     loading: true,
     user: null,
 }
