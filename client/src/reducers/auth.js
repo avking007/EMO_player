@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS } from "./types";
+import { LOGIN_FAIL, LOGIN_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED } from "./types";
 
 const initState = {
     token: localStorage.getItem('token'),
@@ -8,8 +8,11 @@ const initState = {
 }
 
 export default function authorize(state = initState, dispatch) {
-    const { action, payload } = dispatch;
-    switch (action) {
+    const { type, payload } = dispatch;
+    switch (type) {
+        case USER_LOADED:
+            return {...state, loading:false, isAuthenticated: true, user: payload.user};
+
         case SIGNUP_SUCCESS:
         case LOGIN_SUCCESS: 
             localStorage.setItem('token', payload.token);
