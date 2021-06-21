@@ -1,130 +1,66 @@
 import React, { useState } from "react";
-
+import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
-import Base from "../../../core/Base";
-import { authenticate, isAutheticated, signin } from "../../../helper/auth";
+import { login } from '../../../actions/auth';
 
-const Signin = () => {
-  const [values, setValues] = useState({
+const SignIn = ({ isAutheticated, login }) => {
+  const [user, setUser] = useState({
     email: "",
-    password: "",
-    error: "",
-    loading: false,
-    didRedirect: false,
+    password: ""
   });
-  const { email, password, error, loading, didRedirect } = values;
 
-  const { user } = isAutheticated();
-  console.log(user);
-
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
+  const handleChange = (event) => {
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-    console.log(email, password);
-    signin({ email, password })
-      .then((data) => {
-        if (data.error) {
-          console.log("hello");
-          setValues({
-            ...values,
-            error: data.error,
-            email: "",
-            password: "",
-            loading: false,
-          });
-        } else {
-          authenticate(data, () => {
-            setValues({
-              ...values,
-
-              didRedirect: true,
-            });
-          });
-        }
-      })
-      .catch((error) => console.log("error in siginin"));
+    login(user);
   };
 
-  const performRedirect = () => {
-    if (didRedirect) {
-      if (user) {
-        return <Redirect to="/user/dashboard" />;
-      }
-    }
-    if (isAutheticated()) {
-      return <Redirect to="/signin" />;
-    }
-  };
-
-  const signinform = () => {
-    return (
-      <div className="row">
-        <div className="col-md-6 offset-sm-3            text-left">
-          <form>
-            <div className="form-group">
-              <label className="text-light">Email</label>
-              <input
-                className="form-control"
-                onChange={handleChange("email")}
-                value={email}
-                type="email"
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-light">Password</label>
-              <input
-                className="form-control"
-                onChange={handleChange("password")}
-                value={password}
-                type="password"
-              />
-            </div>
-            <button onClick={onSubmit} className="btn btn-success btn-block">
-              Signin
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  };
-
-  const loadingMessage = () => {
-    return (
-      loading && (
-        <div className="">
-          <h2>Loading...</h2>
-        </div>
-      )
-    );
-  };
-
-  const errorMessage = () => {
-    return (
-      <div className="row">
-        <div className="col-md-6 offset-sm-3 text-left">
-          <div
-            className="alert alert-danger"
-            style={{ display: error ? "" : "none" }}
-          >
-            {error}
-          </div>
-        </div>
-      </div>
-    );
-  };
+  if (isAutheticated) {
+    return <Redirect to='/home' />
+  }
 
   return (
-    <Base title="Signin Page" description="Login user">
-      {loadingMessage()}
-      {errorMessage()}
-      {signinform()}
-      {performRedirect()}
-    </Base>
+    <div className="container-fluid p-4">
+
+      <div className="col-md-6 offset-sm-3 text-left">
+        <form>
+          <div className="form-group">
+            <label className="text-light">Email</label>
+            <input
+              className="form-control"
+              name="email"
+              onChange={handleChange}
+              value={user.email}
+              type="email"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="text-light">Password</label>
+            <input
+              className="form-control"
+              onChange={handleChange}
+              name="password"
+              value={user.password}
+              type="password"
+            />
+          </div>
+
+          <button onClick={onSubmit} className="btn btn-success btn-block">
+            Signin
+          </button>
+        </form>
+      </div>
+
+    </div>
   );
 };
 
-export default Signin;
+const mapper = (state) => ({
+  isAutheticated: state.auth.isAutheticated,
+});
+
+export default connect(mapper, { login })(SignIn);

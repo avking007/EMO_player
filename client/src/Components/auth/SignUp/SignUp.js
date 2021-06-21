@@ -1,52 +1,33 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+import { signUp } from '../../../actions/auth';
 
-import { Link } from "react-router-dom";
-import Base from "../../../core/Base";
-import { signup } from "../../../helper/auth";
 
-const Signup = () => {
-  const [values, setValues] = useState({
+const SignUp = ({isAuthenticated, signUp}) => {
+
+  const [user, setUser] = useState({
     first_name: "",
     last_name: "",
     email: "",
     password: "",
-    error: "",
-    success: false,
   });
 
-  const { first_name, last_name, email, password, error, success } = values;
-
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
+  const handleChange = () => (event) => {
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    setValues({ ...values, error: false });
-    signup({ first_name, last_name, email, password })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, success: false });
-          console.log("in error");
-        } else {
-          setValues({
-            ...values,
-            first_name: "",
-            last_name: "",
-            email: "",
-            password: "",
-            error: "",
-            success: true,
-          });
-          console.log(values);
-          console.log("hey i am in success");
-        }
-      })
-      .catch((error) => console.log(error));
+    signUp(user);
   };
 
-  const signupform = () => {
-    return (
+  if (isAuthenticated) {
+    return <Redirect to="/home" />
+  }
+
+  return (
+    <div className="container-fluid p-4">
       <div className="row">
         <div className="col-md-6 offset-sm-3 text-left">
           <form>
@@ -56,14 +37,16 @@ const Signup = () => {
                 className="form-control"
                 onChange={handleChange("first_name")}
                 type="text"
-                value={first_name}
+                name="first_name"
+                value={user.first_name}
               />
               <label className="text-light">Last Name</label>
               <input
                 className="form-control"
                 onChange={handleChange("last_name")}
                 type="text"
-                value={last_name}
+                name='last_name'
+                value={user.last_name}
               />
             </div>
             <div className="form-group">
@@ -72,7 +55,8 @@ const Signup = () => {
                 className="form-control"
                 onChange={handleChange("email")}
                 type="email"
-                value={email}
+                name="email"
+                value={user.email}
               />
             </div>
             <div className="form-group">
@@ -81,7 +65,8 @@ const Signup = () => {
                 className="form-control"
                 onChange={handleChange("password")}
                 type="password"
-                value={password}
+                name="password"
+                value={user.password}
               />
             </div>
             <button onClick={onSubmit} className="btn btn-success btn-block">
@@ -90,50 +75,12 @@ const Signup = () => {
           </form>
         </div>
       </div>
-    );
-  };
-
-  const successMessage = () => {
-    return (
-      <div className="row">
-        <div className="col-md-6 offset-sm-3 text-left">
-          <div
-            className="alert alert-success"
-            style={{ display: success ? "" : "none" }}
-          >
-            New account was created successfully. Please{" "}
-            <Link to="/signin">Login Here</Link>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const errorMessage = () => {
-    return (
-      <div className="row">
-        <div className="col-md-6 offset-sm-3 text-left">
-          <div
-            className="alert alert-danger"
-            style={{ display: error ? "" : "none" }}
-          >
-            {error}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  return (
-    <Base
-      title="Signup Page"
-      description="Hey Are u not registerd? Get Register now.."
-    >
-      {successMessage()}
-      {errorMessage()}
-      {signupform()}
-    </Base>
+    </div>
   );
 };
 
-export default Signup;
+const mapper = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapper, {signUp})(SignUp);
