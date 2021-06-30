@@ -24,7 +24,7 @@ export const login = (userDetails) => async(dispatch) => {
             'Content-Type': 'application/json'
         };
 
-        const user = await axios.post(`${API}/user/login`, userDetails, config);
+        const user = await axios.get(`${API}/user/login`, userDetails, config);
         dispatch({type: LOGIN_SUCCESS, payload: user.data});
         dispatch(loadUser());
     } catch (error) {
