@@ -13,6 +13,7 @@ app.use(cors())
 
 // api routes
 app.use('/user', require('./routes/auth'));
+app.use('/song', require('./routes/songs'));
 
 // define port for server
 const PORT = process.env.PORT || 5000;
