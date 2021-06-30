@@ -92,7 +92,7 @@ router.post(
 // route: user/login
 // access: public
 // desc: login user
-router.post(
+router.get(
   '/login',
   [
     check('email', 'Email is required').not().isEmpty(),
