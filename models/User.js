@@ -18,6 +18,21 @@ const UserSchema = new mongo.Schema({
     type: String,
     required: true,
   },
-});
+  songDetails: [{
+    songId: {
+      type: String
+    },
+    likedCount: {
+      type: Number,
+      default: 0,
+    },
+    SkippedCount: {
+      type: Number,
+      default: 0,
+    }
+  }
+  ]
+}
+);
 
 module.exports = User = mongo.model('user', UserSchema);
