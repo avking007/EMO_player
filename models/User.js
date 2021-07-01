@@ -29,6 +29,10 @@ const UserSchema = new mongo.Schema({
     SkippedCount: {
       type: Number,
       default: 0,
+    },
+    mood: {
+      type: String,
+      default: 'neutral'
     }
   }
   ]
