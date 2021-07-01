@@ -21,7 +21,6 @@ router.put('/liked/:songId', auth, async (req, res) => {
         // look for the song in the user song details array and increament the liked count by 1
         if (userSongs.songDetails.length > 0) {
             userSongs.songDetails.forEach((song) => {
-                console.log(song);
                 if (song.songId === songId) {
                     song.likedCount += 1;
                     isNewSongLiked = false;
@@ -38,7 +37,7 @@ router.put('/liked/:songId', auth, async (req, res) => {
         }
 
         await userSongs.save();
-        res.json('song Liked');
+        res.json(userSongs);
     } catch (error) {
         console.log(error);
         return res.status(500).send('Server Error');
@@ -66,7 +65,7 @@ router.put('/disliked/:songId', auth, async (req, res) => {
         }
 
         await userSongs.save();
-        res.json('song Disliked');
+        res.json(userSongs);
     } catch (error) {
         return res.status(500).send('Server Error');
     }
@@ -103,7 +102,7 @@ router.put('/skipped/:songId', auth, async (req, res) => {
             });
         }
         await userSongs.save();
-        res.json('song Skipped');
+        res.json(userSongs);
     } catch (error) {
         console.log(error);
         return res.status(500).send('Server Error');
