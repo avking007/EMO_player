@@ -9,10 +9,10 @@ const router = express.Router();
 // route: song/liked/:songId/:mood
 // access: private
 // desc: likes the song by songId and mood for a user
-router.put('/liked/:songId', auth, async (req, res) => {
+router.put('/liked/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
-
+        const mood = req.params.mood;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
         console.log(userSongs);
@@ -31,9 +31,15 @@ router.put('/liked/:songId', auth, async (req, res) => {
         // if it is a new song that the user has liked, add that song in the song deltail array of that mood
         // and set likedCount to 1
         if (isNewSongLiked) {
-            userSongs.songDetails.push({
-                songId, likedCount: 1
-            });
+            if (mood) {
+                userSongs.songDetails.push({
+                    songId, likedCount: 1, mood
+                });
+            } else {
+                userSongs.songDetails.push({
+                    songId, likedCount: 1
+                });
+            }
         }
 
         await userSongs.save();
@@ -76,7 +82,7 @@ router.put('/disliked/:songId', auth, async (req, res) => {
 // route: song/liked/:songId/:mood
 // access: private
 // desc: increase skippedCount the song by songId for a user
-router.put('/skipped/:songId', auth, async (req, res) => {
+router.put('/skipped/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
         // get user
@@ -97,9 +103,15 @@ router.put('/skipped/:songId', auth, async (req, res) => {
         // if it is a new song that the user has liked, add that song in the song deltail array of that mood
         // and set likedCount to 1
         if (isNewSongSkipped) {
-            userSongs.songDetails.push({
-                songId, SkippedCount: 1
-            });
+            if (mood) {
+                userSongs.songDetails.push({
+                    songId, SkippedCount: 1, mood
+                });
+            } else {
+                userSongs.songDetails.push({
+                    songId, SkippedCount: 1
+                });
+            }
         }
         await userSongs.save();
         res.json(userSongs);
