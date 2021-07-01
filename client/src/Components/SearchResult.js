@@ -6,7 +6,6 @@ import { GlobalContext } from './GlobalState';
 import '../style.css';
 import {
   ListItem,
-  Typography,
   ListItemAvatar,
   Avatar,
   Divider,
@@ -77,6 +76,7 @@ const SearchResult = ({ videos }) => {
           alignItems="flex-start"
           button
           onClick={() => handleClick(video)}
+          style={{color: '#fff'}}
         >
           <ListItemAvatar>
             <Avatar
@@ -90,13 +90,9 @@ const SearchResult = ({ videos }) => {
             primary={entities.decode(snippet.title, { level: 'xml' })}
             secondary={
               <>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  color="textPrimary"
-                >
+                <span style={{color: "#fff"}}>
                   {snippet.channelTitle}
-                </Typography>
+                </span>
               </>
             }
           />
