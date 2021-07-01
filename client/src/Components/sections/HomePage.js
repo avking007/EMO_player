@@ -4,7 +4,7 @@ import youtubeSearch from '../../apis/youtubeSearch';
 
 // make a permanent playlist object with few songs catergory
 const playlistsIds = {
-  LatestSongs: "PLFgquLnL59akA2PflFpeQG9L01VFg90wS",
+  LatestSongs: "PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK",
   RomanticSongs: "PL64G6j8ePNureM8YCKy5nRFyzYf8I2noy",
   EdmSongs: "PLw-VjHDlEOgs658kAHR_LAaILBXb-s6Q5",
   TopBolloywood: "PLcRN7uK9CFpPkvCc-08tWOQo6PAg4u0lA",
