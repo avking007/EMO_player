@@ -9,20 +9,19 @@ const router = express.Router();
 // route: song/liked/:songId/:mood
 // access: private
 // desc: likes the song by songId and mood for a user
-router.put('/liked/:songId/:mood', auth, async (req, res) => {
+router.put('/played/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
         const mood = req.params.mood;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
-        console.log(userSongs);
         let isNewSongLiked = true;
 
         // look for the song in the user song details array and increament the liked count by 1
         if (userSongs.songDetails.length > 0) {
             userSongs.songDetails.forEach((song) => {
                 if (song.songId === songId) {
-                    song.likedCount += 1;
+                    song.playCount += 1;
                     isNewSongLiked = false;
                 }
             });
@@ -31,48 +30,15 @@ router.put('/liked/:songId/:mood', auth, async (req, res) => {
         // if it is a new song that the user has liked, add that song in the song deltail array of that mood
         // and set likedCount to 1
         if (isNewSongLiked) {
-            if (mood) {
-                userSongs.songDetails.push({
-                    songId, likedCount: 1, mood
-                });
-            } else {
-                userSongs.songDetails.push({
-                    songId, likedCount: 1
-                });
-            }
-        }
-
-        await userSongs.save();
-        res.json(userSongs);
-    } catch (error) {
-        console.log(error);
-        return res.status(500).send('Server Error');
-    }
-}
-);
-
-// route: song/disliked/:songId
-// access: private
-// desc: dislikes the song by songId for a user
-router.put('/disliked/:songId', auth, async (req, res) => {
-    try {
-        const songId = req.params.songId;
-
-        // get user
-        const userSongs = await User.findById(req.user.id).select("songDetails");
-
-        // look for the song in the user song details array and increament the liked count by 1
-        if (userSongs.songDetails.length > 0) {
-            userSongs.songDetails.forEach((song) => {
-                if (song.songId === songId) {
-                    song.likedCount -= 1;
-                }
+            userSongs.songDetails.push({
+                songId, likedCount: 1, mood
             });
         }
 
         await userSongs.save();
         res.json(userSongs);
     } catch (error) {
+        console.log(error);
         return res.status(500).send('Server Error');
     }
 }
@@ -85,6 +51,7 @@ router.put('/disliked/:songId', auth, async (req, res) => {
 router.put('/skipped/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
+        const mood = req.params.mood;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
 
@@ -103,15 +70,9 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
         // if it is a new song that the user has liked, add that song in the song deltail array of that mood
         // and set likedCount to 1
         if (isNewSongSkipped) {
-            if (mood) {
-                userSongs.songDetails.push({
-                    songId, SkippedCount: 1, mood
-                });
-            } else {
-                userSongs.songDetails.push({
-                    songId, SkippedCount: 1
-                });
-            }
+            userSongs.songDetails.push({
+                songId, SkippedCount: 1,mood
+            });
         }
         await userSongs.save();
         res.json(userSongs);

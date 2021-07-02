@@ -22,7 +22,7 @@ const UserSchema = new mongo.Schema({
     songId: {
       type: String
     },
-    likedCount: {
+    playCount: {
       type: Number,
       default: 0,
     },

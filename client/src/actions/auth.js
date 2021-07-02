@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED } from '../reducers/types';
+import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED, USER_SONGS_LOADED } from '../reducers/types';
 import { API } from '../utils/backend';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -11,7 +11,11 @@ export const loadUser = () => async (dispatch) => {
 
     try {
         const user = await axios.get(`${API}/user`);
-        dispatch({ type: USER_LOADED, payload: user.data });
+        const {_id, first_name, last_name, email } = user.data.user;
+        const userData = {_id, first_name, last_name, email};
+        console.log(userData);
+        dispatch({ type: USER_LOADED, payload: userData });
+        dispatch({type: USER_SONGS_LOADED, payload: user.data.user.songDetails})
     } catch (error) {
         console.log(error);
         dispatch({ type: AUTH_ERROR });
