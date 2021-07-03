@@ -15,23 +15,23 @@ router.put('/played/:songId/:mood', auth, async (req, res) => {
         const mood = req.params.mood;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
-        let isNewSongLiked = true;
+        let isNewSongPlayed = true;
 
         // look for the song in the user song details array and increament the liked count by 1
-        if (userSongs.songDetails.length > 0) {
-            userSongs.songDetails.forEach((song) => {
+        if (userSongs.songDetails[mood].length > 0) {
+            userSongs.songDetails[mood].forEach((song) => {
                 if (song.songId === songId) {
                     song.playCount += 1;
-                    isNewSongLiked = false;
+                    isNewSongPlayed = false;
                 }
             });
         }
 
         // if it is a new song that the user has liked, add that song in the song deltail array of that mood
         // and set likedCount to 1
-        if (isNewSongLiked) {
-            userSongs.songDetails.push({
-                songId, likedCount: 1, mood
+        if (isNewSongPlayed) {
+            userSongs.songDetails[mood].push({
+                songId, playCount: 1, mood
             });
         }
 
@@ -57,9 +57,9 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
 
         let isNewSongSkipped = true;
 
-        if (userSongs.songDetails.length > 0 ) {
+        if (userSongs.songDetails[mood].length > 0 ) {
             // look for the song in the user song details array and increament the liked count by 1
-            userSongs.songDetails.forEach((song) => {
+            userSongs.songDetails[mood].forEach((song) => {
                 if (song.songId === songId) {
                     song.SkippedCount += 1;
                     isNewSongSkipped = false;
@@ -70,7 +70,7 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
         // if it is a new song that the user has liked, add that song in the song deltail array of that mood
         // and set likedCount to 1
         if (isNewSongSkipped) {
-            userSongs.songDetails.push({
+            userSongs.songDetails[mood].push({
                 songId, SkippedCount: 1,mood
             });
         }

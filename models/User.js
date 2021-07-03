@@ -18,24 +18,62 @@ const UserSchema = new mongo.Schema({
     type: String,
     required: true,
   },
-  songDetails: [{
-    songId: {
-      type: String
-    },
-    playCount: {
-      type: Number,
-      default: 0,
-    },
-    SkippedCount: {
-      type: Number,
-      default: 0,
-    },
-    mood: {
-      type: String,
-      default: 'neutral'
-    }
+  songDetails: {
+    happy: [{
+      songId: {
+        type: String
+      },
+      playCount: {
+        type: Number,
+        default: 0,
+      },
+      SkippedCount: {
+        type: Number,
+        default: 0,
+      },
+    }],
+
+    sad: [{
+      songId: {
+        type: String
+      },
+      playCount: {
+        type: Number,
+        default: 0,
+      },
+      SkippedCount: {
+        type: Number,
+        default: 0,
+      },
+    }],
+    angry: [{
+      songId: {
+        type: String
+      },
+      playCount: {
+        type: Number,
+        default: 0,
+      },
+      SkippedCount: {
+        type: Number,
+        default: 0,
+      },
+    }],
+    neutral: [{
+      songId: {
+        type: String
+      },
+      playCount: {
+        type: Number,
+        default: 0,
+      },
+      SkippedCount: {
+        type: Number,
+        default: 0,
+      },
+    }],
+
   }
-  ]
 }
 );
 
