@@ -7,16 +7,9 @@ import React, {
   lazy,
 } from "react";
 
-import {
-  withRouter,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { withRouter, Route, Switch } from "react-router-dom";
 
-import {
-  Grid,
-  CircularProgress,
-} from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 
 import { GlobalContext } from "./GlobalState";
 import {
@@ -30,11 +23,11 @@ import {
 // import the db from save song
 import MainPlayer from "./player/MainPlayer";
 import PrivateRoute from "./Routes/PrivateRoute";
+import MoodPlaylist from "./MoodDetector/MoodPlaylist/MoodPlaylist";
 // pages
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
 const SearchResult = lazy(() => import("./SearchResult"));
 const HomePage = lazy(() => import("./sections/HomePage"));
-
 
 let previousLocation;
 
@@ -86,7 +79,6 @@ const CurrentSection = ({ history, location }) => {
       setUpdateCount((c) => c + 1);
     });
     removeDownloadingState();
-  
   }, [history, location]);
 
   const checkPrevLocation = () => {
@@ -105,6 +97,7 @@ const CurrentSection = ({ history, location }) => {
             path="/search"
             render={(props) => <SearchResult videos={searchResult} />}
           />
+          <PrivateRoute path="/mood/:mood" component={MoodPlaylist} />
           <PrivateRoute
             path="/home"
             render={(props) => {
@@ -116,34 +109,21 @@ const CurrentSection = ({ history, location }) => {
             path="/liked"
             render={(props) => {
               setTabValue(1);
-              return (
-                <RenderDatabase
-                  songs={songsLikedState}
-                  {...props}
-                />
-              );
+              return <RenderDatabase songs={songsLikedState} {...props} />;
             }}
           />
           <PrivateRoute
             path="/downloads"
             render={(props) => {
               setTabValue(2);
-              return (
-                <RenderDatabase
-                  songs={songsDownloadedState}
-                />
-              );
+              return <RenderDatabase songs={songsDownloadedState} />;
             }}
           />
           <PrivateRoute
             path="/history"
             render={(props) => {
               setTabValue(3);
-              return (
-                <RenderDatabase
-                  songs={songsHistoryState}
-                />
-              );
+              return <RenderDatabase songs={songsHistoryState} />;
             }}
           />
         </Switch>

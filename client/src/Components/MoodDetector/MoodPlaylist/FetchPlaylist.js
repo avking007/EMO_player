@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { motion, useCycle } from "framer-motion";
 
-import { GlobalContext } from "./GlobalState";
+import { GlobalContext } from "../../GlobalState";
 
-import "../style.css";
+import "../../../style.css";
 import {
   ListItem,
   ListItemAvatar,
@@ -41,7 +41,7 @@ const ulVariants = {
   },
 };
 
-const SearchResult = ({ videos }) => {
+const FetchPlaylist = ({ videos }) => {
   const [isOpen, setisOpen] = useCycle(false, true);
 
   const [, dispatch] = useContext(GlobalContext);
@@ -111,4 +111,4 @@ const SearchResult = ({ videos }) => {
   );
 };
 
-export default SearchResult;
+export default FetchPlaylist;
