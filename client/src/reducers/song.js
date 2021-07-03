@@ -8,7 +8,7 @@ import {
 }
     from "./types";
 
-const initState = []
+const initState = {}
 
 export default function songDetails(state = initState, dispatch) {
 
@@ -18,10 +18,10 @@ export default function songDetails(state = initState, dispatch) {
         case SONG_PLAYED:
         case SONG_SKIPPED:
             console.log(payload);
-            return [...payload];
+            return {...payload};
 
         case USER_SONGS_LOAD_FAIL:
-            return [];
+            return {};
 
         case SONG_PLAYED_FAIL:
         case SONG_SKIPPED_FAIL:
