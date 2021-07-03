@@ -6,7 +6,6 @@ import { GlobalContext } from './GlobalState';
 import '../style.css';
 import {
   ListItem,
-  Typography,
   ListItemAvatar,
   Avatar,
   Divider,
@@ -45,8 +44,7 @@ const ulVariants = {
 const SearchResult = ({ videos }) => {
   const [isOpen, setisOpen] = useCycle(false, true);
 
-  // eslint-disable-next-line no-empty-pattern
-  const [{}, dispatch] = useContext(GlobalContext);
+  const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
@@ -66,7 +64,6 @@ const SearchResult = ({ videos }) => {
   };
 
   React.useEffect(() => {
-    setTimeout(() => {}, 100);
     setisOpen(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -79,6 +76,7 @@ const SearchResult = ({ videos }) => {
           alignItems="flex-start"
           button
           onClick={() => handleClick(video)}
+          style={{color: '#fff'}}
         >
           <ListItemAvatar>
             <Avatar
@@ -92,13 +90,9 @@ const SearchResult = ({ videos }) => {
             primary={entities.decode(snippet.title, { level: 'xml' })}
             secondary={
               <>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  color="textPrimary"
-                >
+                <span style={{color: "#fff"}}>
                   {snippet.channelTitle}
-                </Typography>
+                </span>
               </>
             }
           />

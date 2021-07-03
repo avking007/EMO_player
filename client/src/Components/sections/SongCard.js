@@ -25,8 +25,8 @@ const useStyles = makeStyles({
   },
 });
 const MediaCard = ({ songs, categotyTitle }) => {
-  // eslint-disable-next-line no-empty-pattern
-  const [{}, dispatch] = useContext(GlobalContext);
+
+  const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
@@ -53,13 +53,9 @@ const MediaCard = ({ songs, categotyTitle }) => {
         // this is the url of the max resolution of thumbnail
       });
     }
-
-    // console.log(video);
   };
 
   const classes = useStyles();
-
-  // console.log("card re rendered");
 
   if (songs) {
     const renderCards = songs.map((song) => {

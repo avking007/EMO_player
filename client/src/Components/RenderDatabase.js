@@ -7,7 +7,6 @@ import DownloadIcon from '../images/DownloadIcon.svg';
 
 import {
   ListItem,
-  Typography,
   ListItemAvatar,
   Avatar,
   Divider,
@@ -159,13 +158,9 @@ const RenderDatabase = (props) => {
             primary={song.title}
             secondary={
               <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  color="textPrimary"
-                >
+                <span style={{color: '#fff'}}>
                   {song.channelTitle}
-                </Typography>
+                </span>
               </React.Fragment>
             }
           />
@@ -199,6 +194,7 @@ const RenderDatabase = (props) => {
         maxWidth: '1000px',
         left: '50%',
         transform: 'translateX(-50%)',
+        color: '#fff'
       }}
     >
       {renderResult[row.index]}
@@ -212,7 +208,6 @@ const RenderDatabase = (props) => {
       <List
         height={window.innerHeight - 100}
         itemCount={songs.length}
-        width={window.innerWidth}
       >
         {renderItem}
       </List>
