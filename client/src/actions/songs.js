@@ -5,7 +5,6 @@ import { API } from '../utils/backend';
 export const userPlaySong = (mood, songId) => async(dispatch) => {
     try {
         const res = await axios.put(`${API}/song/played/${songId}/${mood || 'neutral'}`);
-        console.log(res);
         dispatch({type: SONG_PLAYED, payload: res.data.songDetails});
     } catch (error) {
         console.log(error);

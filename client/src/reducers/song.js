@@ -17,7 +17,6 @@ export default function songDetails(state = initState, dispatch) {
         case USER_SONGS_LOADED:
         case SONG_PLAYED:
         case SONG_SKIPPED:
-            console.log(payload);
             return {...payload};
 
         case USER_SONGS_LOAD_FAIL:

@@ -13,7 +13,7 @@ export const loadUser = () => async (dispatch) => {
         const user = await axios.get(`${API}/user`);
         const {_id, first_name, last_name, email } = user.data.user;
         const userData = {_id, first_name, last_name, email};
-        console.log(userData);
+
         dispatch({ type: USER_LOADED, payload: userData });
         dispatch({type: USER_SONGS_LOADED, payload: user.data.user.songDetails})
     } catch (error) {
