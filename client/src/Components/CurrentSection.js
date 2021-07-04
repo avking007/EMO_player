@@ -23,7 +23,6 @@ import {
 // import the db from save song
 import MainPlayer from "./player/MainPlayer";
 import PrivateRoute from "./Routes/PrivateRoute";
-import MoodPlaylist from "./MoodDetector/MoodPlaylist/MoodPlaylist";
 // pages
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
 const SearchResult = lazy(() => import("./SearchResult"));
@@ -97,7 +96,6 @@ const CurrentSection = ({ history, location }) => {
             path="/search"
             render={(props) => <SearchResult videos={searchResult} />}
           />
-          <PrivateRoute path="/mood/:mood" component={MoodPlaylist} />
           <PrivateRoute
             path="/home"
             render={(props) => {

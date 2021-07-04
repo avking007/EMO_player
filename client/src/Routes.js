@@ -13,6 +13,8 @@ import PrivacyPage from "./Components/sections/PrivacyPage";
 import FeedbackForm from "./Components/sections/FeedbackForm";
 import ContributorsPage from "./Components/sections/ContributorsPage";
 import BottomMenu from "./Components/Layout/BottomMenu";
+import PrivateRoute from "./Components/Routes/PrivateRoute";
+import MoodPlaylist from "./Components/MoodDetector/MoodPlaylist/MoodPlaylist";
 
 const Routes = () => {
 
@@ -28,6 +30,7 @@ const Routes = () => {
         <Route path="/privacy" component={PrivacyPage} />
         <Route path="/feedback" component={FeedbackForm} />
         <Route path="/contributors" component={ContributorsPage} />
+        <Route path="/mood/:mood" component={MoodPlaylist} exact/>
         <Route component={CurrentSection} />
 
       </Switch>
