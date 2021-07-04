@@ -18,7 +18,7 @@ const ListItem = ({song}) => {
             className="searchThumb"
             style={{ width: "60px", height: "60px", marginRight: "15px" }}
             alt={song?.title}
-            src={song?.thumbnail}
+            src={song?.thumbnail || song?.thumbnails?.high?.url}
           />
         </ListItemAvatar>
         <ListItemText

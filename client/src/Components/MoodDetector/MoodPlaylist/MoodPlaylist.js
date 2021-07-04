@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { userPlaySong, userSkipSong } from "../../../actions/songs";
 import youtubeSearch from "../../../apis/youtubeSearch";
 import { emoAlgorithm } from "../../../utils/emoAlgorithm";
-import FetchPlaylist from "./FetchPlaylist";
 import ListItem from "./ListItem";
 
 const MoodPlaylist = ({ areUserSongsLoading, songsArray, userPlaySong, userSkipSong, match }) => {
@@ -76,7 +75,7 @@ const MoodPlaylist = ({ areUserSongsLoading, songsArray, userPlaySong, userSkipS
         {getCustomPlaylist(songsArray[mood])}
         {isLoading ? CircularLoader() : searchResult.map((song) => {
           const { snippet } = song;
-          return <FetchPlaylist song={snippet} />
+          return <ListItem song={snippet} />
         })}
       </div>
     );
