@@ -17,9 +17,6 @@ const BottomMenu = () => {
         indicator: {
             display: "none",
         },
-        labelIcon: {
-            margin: 0,
-        },
     })(Tabs);
 
     const CustomTab = withStyles({
