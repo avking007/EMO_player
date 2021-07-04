@@ -23,7 +23,7 @@ const SignIn = ({ isAuthenticated, login }) => {
   }
 
   return (
-    <div className="container-fluid p-4">
+    <div className="container-fluid p-4" style={{height: '100vh'}}>
 
       <div className="col-md-6 offset-sm-3 text-left">
         <form>
