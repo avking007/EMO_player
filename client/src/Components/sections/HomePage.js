@@ -109,8 +109,6 @@ const HomePage = () => {
       <SongCard songs={songObj.latestSongs} categotyTitle={"Latest Music"} />
 
       <SongCard songs={songObj.romanticSongs} categotyTitle={"Romantic Mood"} />
-      <br />
-      <br />
     </>
   );
 };
