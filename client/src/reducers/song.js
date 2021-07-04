@@ -8,7 +8,9 @@ import {
 }
     from "./types";
 
-const initState = {}
+const initState = {
+    isLoading: true
+}
 
 export default function songDetails(state = initState, dispatch) {
 
@@ -17,7 +19,7 @@ export default function songDetails(state = initState, dispatch) {
         case USER_SONGS_LOADED:
         case SONG_PLAYED:
         case SONG_SKIPPED:
-            return {...payload};
+            return {...payload, isLoading: false};
 
         case USER_SONGS_LOAD_FAIL:
             return {};

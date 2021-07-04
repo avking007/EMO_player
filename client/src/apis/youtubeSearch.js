@@ -14,6 +14,6 @@ export default axios.create({
     part: "snippet",
     videoCategoryId: "10",
     type: "video",
-    key: "AIzaSyCaSzog0sT9pG7VFK_P0Tt0HFW2Ql22p48",
+    key: "AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604",
   },
 });
