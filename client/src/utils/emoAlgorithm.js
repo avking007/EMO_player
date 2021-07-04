@@ -42,7 +42,7 @@ export const emoAlgorithm = (songList) => {
 
   for (let index = 0; index < songList.length; index++) {
     const weight = getWeight(songList[index]);
-    resultSongArr.push({ weight, song: songList[index] });
+    resultSongArr.push({ weight, ...songList[index] });
   }
   resultSongArr.sort((a, b) => b.weight - a.weight);
   return resultSongArr;
