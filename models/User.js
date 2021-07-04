@@ -23,6 +23,18 @@ const UserSchema = new mongo.Schema({
       songId: {
         type: String
       },
+      thumbnail: {
+        type: String,
+        default: ""
+      },
+      channelTitle : {
+        type: String,
+        defualt:""
+      },
+      title: {
+        type: String,
+        default: ""
+      },
       playCount: {
         type: Number,
         default: 0,
@@ -37,6 +49,18 @@ const UserSchema = new mongo.Schema({
       songId: {
         type: String
       },
+      thumbnail: {
+        type: String,
+        default: ""
+      },
+      channelTitle : {
+        type: String,
+        defualt:""
+      },
+      title: {
+        type: String,
+        default: ""
+      },
       playCount: {
         type: Number,
         default: 0,
@@ -50,6 +74,18 @@ const UserSchema = new mongo.Schema({
       songId: {
         type: String
       },
+      thumbnail: {
+        type: String,
+        default: ""
+      },
+      channelTitle : {
+        type: String,
+        defualt:""
+      },
+      title: {
+        type: String,
+        default: ""
+      },
       playCount: {
         type: Number,
         default: 0,
@@ -62,6 +98,18 @@ const UserSchema = new mongo.Schema({
     neutral: [{
       songId: {
         type: String
+      },
+      thumbnail: {
+        type: String,
+        default: ""
+      },
+      channelTitle : {
+        type: String,
+        defualt:""
+      },
+      title: {
+        type: String,
+        default: ""
       },
       playCount: {
         type: Number,

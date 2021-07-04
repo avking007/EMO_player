@@ -13,6 +13,7 @@ router.put('/played/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
         const mood = req.params.mood;
+        const {thumbnail, title, channelTitle} = req.body;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
         let isNewSongPlayed = true;
@@ -31,7 +32,7 @@ router.put('/played/:songId/:mood', auth, async (req, res) => {
         // and set likedCount to 1
         if (isNewSongPlayed) {
             userSongs.songDetails[mood].push({
-                songId, playCount: 1, mood
+                songId, playCount: 1, mood, thumbnail, title, channelTitle,
             });
         }
 
@@ -52,6 +53,7 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
         const mood = req.params.mood;
+        const {thumbnail, title, channelTitle} = req.body;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
 
@@ -71,7 +73,7 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
         // and set likedCount to 1
         if (isNewSongSkipped) {
             userSongs.songDetails[mood].push({
-                songId, SkippedCount: 1,mood
+                songId, SkippedCount: 1,mood, title, channelTitle, thumbnail,
             });
         }
         await userSongs.save();
