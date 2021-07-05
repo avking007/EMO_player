@@ -282,10 +282,9 @@ const MainPlayer = ({ location, history, userPlaySong }) => {
 
   const updateSongDB = async () => {
     const rating = await updatePlayingSong(currentVideoSnippet).then(()=> {
-      userPlaySong(mood, params.get('id'));
+      userPlaySong(mood, params.get('id'), currentVideoSnippet.title, currentVideoSnippet.channelTitle, currentVideoSnippet.sdThumbnail);
     });
     //  it will update song on db and return the rating
-    console.log(rating);
     setRating(rating);
   };
 

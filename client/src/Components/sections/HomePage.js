@@ -104,13 +104,11 @@ const HomePage = () => {
   return (
     <>
       <br />
-      <SongCard songs={songObj.trending} categotyTitle={"Trending Now"} />
+      <SongCard songs={songObj.trending} categoryTitle={"Trending Now"} />
 
-      <SongCard songs={songObj.latestSongs} categotyTitle={"Latest Music"} />
+      <SongCard songs={songObj.latestSongs} categoryTitle={"Latest Music"} />
 
-      <SongCard songs={songObj.romanticSongs} categotyTitle={"Romantic Mood"} />
-      <br />
-      <br />
+      <SongCard songs={songObj.romanticSongs} categoryTitle={"Romantic Mood"} />
     </>
   );
 };

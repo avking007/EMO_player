@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     height: 160,
   },
 });
-const MediaCard = ({ songs, categotyTitle }) => {
+const MediaCard = ({ songs, categoryTitle }) => {
 
   const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
@@ -80,7 +80,7 @@ const MediaCard = ({ songs, categotyTitle }) => {
     return (
       <>
         <Typography variant="h5" style={{ marginLeft: '15px', color:'#e4e6eb' }}>
-          {categotyTitle}
+          {categoryTitle}
         </Typography>
         <div className={'cardSlider'}>{renderCards}</div>
       </>

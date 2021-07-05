@@ -2,10 +2,15 @@ import axios from 'axios';
 import { SONG_PLAYED, SONG_PLAYED_FAIL, SONG_SKIPPED, SONG_SKIPPED_FAIL } from '../reducers/types';
 import { API } from '../utils/backend';
 
-export const userPlaySong = (mood, songId) => async(dispatch) => {
+export const userPlaySong = (mood, songId, title, channelTitle, thumbnail) => async(dispatch) => {
     try {
-        const res = await axios.put(`${API}/song/played/${songId}/${mood || 'neutral'}`);
-        console.log(res);
+        const body = JSON.stringify({title, channelTitle, thumbnail})
+        const config = {
+            headers : {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.put(`${API}/song/played/${songId}/${mood || 'neutral'}`, body, config);
         dispatch({type: SONG_PLAYED, payload: res.data.songDetails});
     } catch (error) {
         console.log(error);
@@ -13,9 +18,16 @@ export const userPlaySong = (mood, songId) => async(dispatch) => {
     }
 }
 
-export const userSkipSong = (mood, songId) => async(dispatch) => {
+export const userSkipSong = (mood, songId, title, channelTitle, thumbnail) => async(dispatch) => {
     try {
-        const res = await axios.put(`${API}/song/skipped/${songId}/${mood || 'neutral'}`);
+        
+        const body = JSON.stringify({title, channelTitle, thumbnail})
+        const config = {
+            headers : {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.put(`${API}/song/skipped/${songId}/${mood || 'neutral'}`, body, config);
         dispatch({type: SONG_SKIPPED, payload: res.data.songDetails});
     } catch (error) {
         console.log(error);

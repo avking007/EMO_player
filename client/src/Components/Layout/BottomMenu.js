@@ -8,7 +8,7 @@ const BottomMenu = () => {
     const CustomTabs = withStyles({
         root: {
             background: "#191414",
-            position: "fixed",
+            position: "sticky",
             bottom: "0",
             padding: 0,
             width: "100%",
@@ -16,9 +16,6 @@ const BottomMenu = () => {
         },
         indicator: {
             display: "none",
-        },
-        labelIcon: {
-            margin: 0,
         },
     })(Tabs);
 

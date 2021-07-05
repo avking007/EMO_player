@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     width: 80,
     height: 80,
   },
-  avatatContainer: {
+  avatarContainer: {
     width: "50%",
   },
   divider: {
@@ -28,8 +28,6 @@ const useStyles = makeStyles({
       margin: "2px",
     },
     "& .MuiAvatar-root": {
-      // width: 50,
-      // height: 50,
       marginRight: 20,
       marginLeft: 10,
       background: pink[500],
@@ -44,32 +42,62 @@ const ContributorsPage = () => {
   return (
     <>
       <br />
-      <Grid container justify="center">
+      <Grid container justify="center" style={{height: '100vh', color: '#fff'}}>
         <Grid
           component={Link}
-          href="https://.com/shivamjoker"
+          href="https://github.com/avking007"
           target="blank"
           container
           direction="column"
           alignItems="center"
           color="inherit"
-          className={classes.avatatContainer}
+          className={classes.avatarContainer}
         >
           <Avatar
             className={classes.avatar}
-            src="https://avatars2.usercontent.com/u/23727670?s=300"
+            src="https://avatars.githubusercontent.com/u/48752936?v=4"
           />
-          <Typography variant="h5">Shivam</Typography>
-          <Typography>Creator of Ylight Music</Typography>
+          <Typography variant="h5">Anish Varshney</Typography>
         </Grid>
 
         <Grid
           container
           direction="column"
           alignItems="center"
-          className={classes.avatatContainer}
+          className={classes.avatarContainer}
           component={Link}
-          href="https://.com/bushblade"
+          href="https://github.com/meghnavarma0"
+          target="blank"
+          color="inherit"
+        >
+          <Avatar
+            className={classes.avatar}
+            src="https://avatars.githubusercontent.com/u/53870079?v=4"
+          />
+          <Typography variant="h5">Meghna Varma</Typography>
+        </Grid>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          className={classes.avatarContainer}
+          component={Link}
+          href="https://github.com/charu-24"
+          target="blank"
+          color="inherit"
+        >
+          <Avatar
+            className={classes.avatar}
+            src="https://avatars.githubusercontent.com/u/53303041?v=4"
+          />
+          <Typography variant="h5">Charu Aggrwal</Typography>
+        </Grid>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          className={classes.avatarContainer}
+          component={Link}
           target="blank"
           color="inherit"
         >
@@ -77,30 +105,9 @@ const ContributorsPage = () => {
             className={classes.avatar}
             src="https://avatars2.usercontent.com/u/21976188?s=300"
           />
-          <Typography variant="h5">Will Adams</Typography>
-          <Typography>Helped in writing code</Typography>
+          <Typography variant="h5">Khushboo Singh</Typography>
         </Grid>
         <Divider className={classes.divider} />
-        <Typography variant="h5">Other Contributors</Typography>
-
-        <Grid container className={classes.miniContainer}>
-          <Grid container alignItems="center">
-            <Avatar>R</Avatar>
-            <Typography variant="h6">Razvan</Typography>
-          </Grid>
-          <Grid container alignItems="center">
-            <Avatar>S</Avatar>
-            <Typography variant="h6">Shantanu</Typography>
-          </Grid>
-          <Grid container alignItems="center">
-            <Avatar>P</Avatar>
-            <Typography variant="h6">Piyush</Typography>
-          </Grid>
-          <Grid container alignItems="center">
-            <Avatar>Z</Avatar>
-            <Typography variant="h6">Zaid</Typography>
-          </Grid>
-        </Grid>
       </Grid>
     </>
   );

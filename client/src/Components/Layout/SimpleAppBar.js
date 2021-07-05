@@ -85,7 +85,7 @@ function SimpleAppBar(props) {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" color="green"  style={styles.title}>
+          <Typography variant="h6" style={styles.title}>
             Emolight Music
           </Typography>
           <IconButton
