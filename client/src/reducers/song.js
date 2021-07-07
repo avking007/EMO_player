@@ -1,4 +1,5 @@
 import {
+    CLEAR_USER_PLAYING_SONGS,
     PLAYLIST_CLEARED,
     PLAYLIST_CREATED,
     PLAYLIST_UPDATED,
@@ -7,7 +8,8 @@ import {
     SONG_SKIPPED,
     SONG_SKIPPED_FAIL,
     USER_SONGS_LOADED,
-    USER_SONGS_LOAD_FAIL
+    USER_SONGS_LOAD_FAIL,
+    USER_SONG_PLAYED
 }
     from "./types";
 
@@ -15,6 +17,7 @@ const initState = {
     songsArray: [],
     isLoading: true,
     currentMoodPlaylist: [],
+    currentSong: null,
 }
 
 export default function songDetails(state = initState, dispatch) {
@@ -28,6 +31,12 @@ export default function songDetails(state = initState, dispatch) {
 
         case USER_SONGS_LOAD_FAIL:
             return {...state};
+        
+        case USER_SONG_PLAYED: 
+            return {...state, currentSong: payload};
+        
+        case CLEAR_USER_PLAYING_SONGS: 
+            return {...state, currentSong: null}
         
         case PLAYLIST_CREATED:
             return {...state, currentMoodPlaylist: payload};

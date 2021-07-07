@@ -79,12 +79,8 @@ const RelatedVideos = ({
         song.snippet && (
           <motion.li key={song.id.videoId} positionTransition={spring}>
             <ListItem
-              // key={song.id.videoId}
               button
               onClick={() => handleClick(song)}
-              // component={Link}
-              // replace
-              // to={{ pathname: "/play", search: `?id=${song.id.videoId}` }}
             >
               <ListItemIcon>
                 <MusicVideo style={{ color: "#fff" }} />

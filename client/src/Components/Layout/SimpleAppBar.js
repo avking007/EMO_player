@@ -13,7 +13,7 @@ import {
 
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 
-import { Menu, Search } from "@material-ui/icons/";
+import { Face, Menu, Search } from "@material-ui/icons/";
 
 const styles = {
   root: {
@@ -88,6 +88,12 @@ function SimpleAppBar(props) {
           <Typography variant="h6" style={styles.title}>
             Emolight Music
           </Typography>
+          <IconButton
+            style={{color:"	#1db954"}}
+            onClick ={() => props.history.push('/mood')}
+             >
+            <Face />
+          </IconButton>
           <IconButton
             onClick={() => setSearchState("clicked")}
             color="inherit"

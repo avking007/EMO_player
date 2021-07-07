@@ -46,7 +46,7 @@ const MusicArt = ({ data, rating, audioEl }) => {
   // if its less than 400 width we will use default hq thumbnail
   const checkImg = e => {
     if (e.target.naturalWidth < 400) {
-      e.target.src = data.sdThumbnail;
+      e.target.src = data?.sdThumbnail || data?.thumbnail;
     }
   };
 
@@ -65,7 +65,7 @@ const MusicArt = ({ data, rating, audioEl }) => {
     setTimeout(() => {
       setHeartStyle({ transform: "scale(1)", color: "#2d3436" });
     }, 300);
-  }, [setHeartStyle, data.id]);
+  }, [setHeartStyle, data?.id]);
 
   React.useEffect(() => {
     if (rating === "liked") {
@@ -81,18 +81,13 @@ const MusicArt = ({ data, rating, audioEl }) => {
   //using the regex
   const shortTitle = data => {
     // this regex is to remove channel name from song title
-    const re = new RegExp(data.channelTitle + " - | : ", "g");
+    const re = new RegExp(data?.channelTitle + " - | : ", "g");
 
-    return data.title.replace(re, "");
+    return data?.title.replace(re, "");
   };
 
   const getThumbnail = () => {
-    // if the thumbnail is downloaded then get it from database or else use the url to fetch
-    if (data.thumbnail) {
-      return window.URL.createObjectURL(data.thumbnail);
-    } else {
-      return data.maxThumbnail;
-    }
+      return data?.thumbnail;
   };
 
   return (
@@ -105,9 +100,8 @@ const MusicArt = ({ data, rating, audioEl }) => {
       onClick={e => {
         if (isDblTouchTap(e)) {
           likeSong();
-          rateSong(data.id, "liked", audioEl);
+          rateSong(data.id || data.songId, "liked", audioEl);
         }
-        // call the like song function on double tap
       }}
     >
       <motion.div
@@ -134,11 +128,11 @@ const MusicArt = ({ data, rating, audioEl }) => {
         />
       </motion.div>
       <br />
-      <Typography color="primary" variant="h5" className="musicArtTitle" align="center">
+      <Typography style={{color: "#fff"}} variant="h5" className="musicArtTitle" align="center">
         {shortTitle(data)}
       </Typography>
-      <Typography color="primary" variant="subtitle1">
-        {data.channelTitle}
+      <Typography style={{color: "#fff"}} variant="subtitle1">
+        {data?.channelTitle}
       </Typography>
       <br />
     </Grid>

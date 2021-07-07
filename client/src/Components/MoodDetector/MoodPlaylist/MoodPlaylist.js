@@ -6,9 +6,10 @@ import { userPlaySong, userSkipSong, playlistCreated, playlistUpdated } from "..
 
 import youtubeSearch from "../../../apis/youtubeSearch";
 import { emoAlgorithm } from "../../../utils/emoAlgorithm";
+import MoodPlayer from '../MoodPlayer/MoodPlayer';
 import ListItem from "./ListItem";
 
-const MoodPlaylist = ({ areUserSongsLoading, songsArray, currentMoodPlaylist, match, playlistCreated, playlistUpdated }) => {
+const MoodPlaylist = ({ currentSong, areUserSongsLoading, songsArray, currentMoodPlaylist, match, playlistCreated, playlistUpdated }) => {
 
   const { mood } = match.params;
 
@@ -49,17 +50,18 @@ const MoodPlaylist = ({ areUserSongsLoading, songsArray, currentMoodPlaylist, ma
 
 
   if (areUserSongsLoading) return CircularLoader();
-  if (songsArray[mood]?.length) {
+  if (currentMoodPlaylist?.length) {
 
     return (
       <div style={{ minHeight: '100vh' }}>
         {currentMoodPlaylist.map((song, index) => (
-          <ListItem key={index} song={song} />
+          <ListItem key={index} song={song} mood={mood} />
         ))}
       </div>
     );
   }
-  return null;
+  if (currentSong) return <MoodPlayer />
+  return (<div style={{ height: '100vh' }} />);
 }
 
 
@@ -67,6 +69,7 @@ const mapper = (state) => ({
   songsArray: state.song.songsArray,
   currentMoodPlaylist: state.song.currentMoodPlaylist,
   areUserSongsLoading: state.song.isLoading,
+  currentSong: state.song.currentSong
 });
 
 export default connect(mapper, { userPlaySong, userSkipSong, playlistCreated, playlistUpdated })(MoodPlaylist);

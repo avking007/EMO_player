@@ -4,17 +4,21 @@ import {
   LinearProgress,
   withStyles
 } from "@material-ui/core/";
+import { connect } from "react-redux";
 
 import {
   ExpandMore,
   GetApp,
   Reply,
   DoneOutline,
+  Close,
 } from "@material-ui/icons/";
 import VolumeController from "./VolumeController";
 import { useSongMethods } from "../RenderDatabase";
 import SleepTimer from './SleepTimer'
 import { GlobalContext } from "../GlobalState";
+import { closeCurrentSong } from "../../actions/songs";
+import { useParams } from "react-router-dom";
 
 const DownloadLoader = withStyles({
   root: {
@@ -25,10 +29,11 @@ const DownloadLoader = withStyles({
   }
 })(LinearProgress);
 
-const TopBar = ({ song, player, setPlayerState, history }) => {
+const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => {
   const { snackbarMsg } = useContext(GlobalContext);
   const [isSongDownloaded, setSongDownloaded] = useState(false);
   const [isSongDownloading, setSongDownloading] = useState(false);
+  const {mood} = useParams();
 
   const {
     handleDownload,
@@ -37,11 +42,11 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
   } = useSongMethods();
 
   useEffect(() => {
-    if (snackbarMsg === "Song Downloaded" || song.audio) {
+    if (snackbarMsg === "Song Downloaded" || song?.audio) {
       setSongDownloaded(true);
       setSongDownloading(false);
     }
-  }, [snackbarMsg, song.audio]);
+  }, [snackbarMsg, song]);
   // if the song is downloaded we will change
 
   // share prompt using chrome web api
@@ -59,8 +64,13 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
   };
 
   const minimizePlayer = () => {
-    history.goBack()
     setPlayerState("minimized");
+    history.goBack()
+  };
+
+  const handleClosePlayer = () => {
+    closeCurrentSong();
+    history.push(`/mood/${mood}`)
   };
 
   return (
@@ -78,25 +88,25 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
       <VolumeController player={player} />
       {deleteDialogComponent}
       <Reply
-        style={{ transform: " scaleX(-1) translateY(-2px)" }}
+        style={{ transform: " scaleX(-1) translateY(-2px)", color: "#fff" }}
         onClick={shareSong}
         color="primary"
       />
-      
-      <SleepTimer player={player}/>
+
+      <SleepTimer player={player} />
 
       <div>
         {isSongDownloaded ? (
           <DoneOutline
-            color="primary"
-            onClick={() => handleRemoveSong(song.id)}
+            style={{ color: "#fff" }}
+            onClick={() => handleRemoveSong(song?.id || song?.songId )}
           /> //song will be removed
         ) : (
           <>
             <GetApp
-              color="primary"
+              style={{ color: "#fff" }}
               onClick={() => {
-                handleDownload(song.id);
+                handleDownload(song?.id || song?.songId);
                 setSongDownloading(true);
               }}
             />
@@ -106,14 +116,18 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
         {/* if the song is downloading we will show loading */}
       </div>
 
-      <ExpandMore
-        onClick={minimizePlayer}
-        color="primary"
-        fontSize="large"
-        style={{ transform: "translateY(-7px)" }}
-      />
+      {song?.songId ? (
+        <Close onClick={handleClosePlayer} fontSize="large" style={{ color: "#fff", cursor: "pointer", paddingRight: '10px', transform: "translateY(-7px)" }} />
+      ) : (
+        <ExpandMore
+          onClick={minimizePlayer}
+          fontSize="large"
+          style={{ transform: "translateY(-7px)", color: "#fff" }}
+        />
+      )}
+
     </Grid>
   );
 };
 
-export default TopBar;
+export default connect(null, {closeCurrentSong})(TopBar);

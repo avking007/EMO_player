@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PLAYLIST_CLEARED, PLAYLIST_CREATED, PLAYLIST_UPDATED, SONG_PLAYED, SONG_PLAYED_FAIL, SONG_SKIPPED, SONG_SKIPPED_FAIL } from '../reducers/types';
+import { CLEAR_USER_PLAYING_SONGS, PLAYLIST_CLEARED, PLAYLIST_CREATED, PLAYLIST_UPDATED, SONG_PLAYED, SONG_PLAYED_FAIL, SONG_SKIPPED, SONG_SKIPPED_FAIL, USER_SONG_PLAYED } from '../reducers/types';
 import { API } from '../utils/backend';
 
 export const userPlaySong = (mood, songId, title, channelTitle, thumbnail) => async (dispatch) => {
@@ -38,7 +38,6 @@ export const userSkipSong = (mood, songId, title, channelTitle, thumbnail) => as
 export const playlistCreated = (songs) => dispatch => {
     try {
         dispatch({ type: PLAYLIST_CREATED, payload: songs });
-        console.log('asdas');
     } catch (error) {
         console.log(error);
     }
@@ -56,12 +55,26 @@ export const playlistUpdated = (songs) => dispatch => {
     try {
         const ytSongsArray = [];
         for (let song = 0; song < songs.length; song++) {
-            const {snippet: {title, channelTitle, thumbnails}} = songs[song];
-            const songObj = {title, channelTitle, thumbnail: thumbnails?.high?.url, songId: songs[song].id.videoId}
-            console.log(songObj);
+            const { snippet: { title, channelTitle, thumbnails } } = songs[song];
+            const songObj = { title, channelTitle, thumbnail: thumbnails?.high?.url, songId: songs[song].id.videoId }
             ytSongsArray.push(songObj);
         }
         dispatch({ type: PLAYLIST_UPDATED, payload: ytSongsArray });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const setCurrentSong = (song) => dispatch => {
+    try {
+        dispatch({ type: USER_SONG_PLAYED, payload: song });
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const closeCurrentSong = () => dispatch => {
+    try {
+        dispatch({ type: CLEAR_USER_PLAYING_SONGS });
     } catch (error) {
         console.log(error);
     }

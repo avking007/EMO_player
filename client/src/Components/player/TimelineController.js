@@ -17,12 +17,13 @@ const PrettoSlider = withStyles({
       position: 'absolute',
       transform: 'scale(1.6)',
       borderRadius: '50px',
-      border: '1px solid',
+      border: '1px solid', 
     },
   },
   track: {
     height: 6,
     borderRadius: 4,
+    color: "#fff"
   },
   rail: {
     height: 6,
@@ -72,7 +73,7 @@ const TimelineController = ({ audioState, player, minimized }) => {
     if (audioState === 'playing') {
       setTimeInterval = setInterval(() => {
         setCurrentTime(player.currentTime);
-        // console.log()
+
       }, 800);
     } else {
       clearInterval(setTimeInterval);
@@ -106,10 +107,10 @@ const TimelineController = ({ audioState, player, minimized }) => {
     return (
       <div style={{ margin: '0 auto', width: '90%' }}>
         <Grid container direction="row" justify="space-between">
-          <Typography variant="body1" color="primary">
+          <Typography variant="body1" style={{color: "#fff"}}>
             {formatTime(currentTime)}
           </Typography>
-          <Typography variant="body1" color="primary">
+          <Typography variant="body1" style={{color: "#fff"}}>
             {showDuration()}
           </Typography>
         </Grid>

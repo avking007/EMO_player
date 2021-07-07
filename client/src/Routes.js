@@ -11,6 +11,7 @@ import MoodDetector from "./Components/MoodDetector/MoodDetector";
 import SettingsPage from "./Components/sections/SettingsPage";
 import PrivacyPage from "./Components/sections/PrivacyPage";
 import ContributorsPage from "./Components/sections/ContributorsPage";
+import MoodPlayer from "./Components/MoodDetector/MoodPlayer/MoodPlayer";
 import BottomMenu from "./Components/Layout/BottomMenu";
 import PrivateRoute from "./Components/Routes/PrivateRoute";
 import MoodPlaylist from "./Components/MoodDetector/MoodPlaylist/MoodPlaylist";
@@ -28,8 +29,9 @@ const Routes = () => {
         <Route path="/settings" component={SettingsPage} />
         <Route path="/privacy" component={PrivacyPage} />
         <Route path="/contributors" component={ContributorsPage} />
-        <Route path="/mood/:mood" component={MoodPlaylist} exact/>
-        <Route component={CurrentSection} />
+        <PrivateRoute path="/mood/:mood" component={MoodPlaylist} exact />
+        <PrivateRoute path="/:mood/:songId" component={MoodPlayer} exact/>
+        <PrivateRoute component={CurrentSection} />
 
       </Switch>
       <BottomMenu />

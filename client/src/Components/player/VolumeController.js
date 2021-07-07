@@ -16,10 +16,10 @@ const VolumeController = ({ player, setPlayerState }) => {
 
       <Grid container spacing={1} style={{ maxWidth: "200px" }}>
         <Grid item>
-          <VolumeUp color="primary" />
+          <VolumeUp style={{color: "#fff"}} />
         </Grid>
         <Grid item xs={3}>
-          <Slider value={volume} onChange={volumeChange} />
+          <Slider style={{color: "#fff"}} value={volume} onChange={volumeChange} />
         </Grid>
       </Grid>
   );
