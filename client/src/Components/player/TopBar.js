@@ -27,7 +27,7 @@ const DownloadLoader = withStyles({
   }
 })(LinearProgress);
 
-const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => {
+const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong, volumeController }) => {
   const { snackbarMsg } = useContext(GlobalContext);
   const [isSongDownloaded, setSongDownloaded] = useState(false);
   const [isSongDownloading, setSongDownloading] = useState(false);
@@ -82,7 +82,7 @@ const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => 
         top: "0"
       }}
     >
-      <VolumeController player={player} />
+      <VolumeController handleVolumeLevel={volumeController} />
       {deleteDialogComponent}
       <Reply
         style={{ transform: " scaleX(-1) translateY(-2px)", color: "#fff" }}

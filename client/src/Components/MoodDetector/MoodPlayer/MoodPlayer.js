@@ -34,7 +34,7 @@ const MoodPlayer = ({
     const { mood } = match.params;
     const audioPlayer = useRef();
     const [audioState, setAudioState] = useState("loading");
-
+    const [volumeLevel, setVolumeLevel] = useState(1);
     if (!currentSong) {
         history.push(`/mood/${mood}`);
     }
@@ -94,12 +94,14 @@ const MoodPlayer = ({
                 <TopBar
                     song={currentSong}
                     history={history}
+                    volumeController={setVolumeLevel}
                 />
                 <ReactPlayer
                     onReady={handleSongReady}
                     onBufferEnd={() => setAudioState("playing")}
                     ref={audioPlayer}
                     onEnded={songEnded}
+                    volume={volumeLevel}
                     onPause={() => setAudioState('paused')}
                     playing={audioState === "playing" ? true : false}
                     url={`https://www.youtube.com/watch?v=${currentSong.songId}`}
