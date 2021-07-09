@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Slider } from "@material-ui/core/";
 import { VolumeUp } from "@material-ui/icons/";
 
-const VolumeController = ({ handleVolumeLevel, setPlayerState }) => {
+const VolumeController = ({ handleVolumeLevel }) => {
   const [volume, setVolume] = useState(100);
 
   const volumeChange = (e, newVal) => {

@@ -27,7 +27,7 @@ const DownloadLoader = withStyles({
   }
 })(LinearProgress);
 
-const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong, volumeController }) => {
+const TopBar = ({ song, history, closeCurrentSong, volumeController }) => {
   const { snackbarMsg } = useContext(GlobalContext);
   const [isSongDownloaded, setSongDownloaded] = useState(false);
   const [isSongDownloading, setSongDownloading] = useState(false);
@@ -89,8 +89,6 @@ const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong, volum
         onClick={shareSong}
         color="primary"
       />
-
-      {/* <SleepTimer player={player} /> */}
 
       <div>
         {isSongDownloaded ? (

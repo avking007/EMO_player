@@ -30,6 +30,7 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
     dispatch({ type: "setCurrentVideoSnippet", snippet: data });
   };
 
+  const [volumeLevel, setVolumeLevel] = useState(1);
   const [isItFromPlaylist, setIsItFromPlaylist] = useState(false);
   const [relatedVideos, setRelatedVideos] = useState([]);
   // there will be 4 states
@@ -191,7 +192,7 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
           >
             <TopBar
               song={currentVideoSnippet}
-              player={player}
+              volumeController={setVolumeLevel}
               setPlayerState={setPlayerState}
               history={history}
             />
@@ -200,6 +201,7 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
               onBufferEnd={() => setAudioState("playing")}
               ref={audioPlayer}
               onEnded={songEnded}
+              volume={volumeLevel}
               onPause={() => setAudioState('paused')}
               playing={audioState === "playing" ? true : false}
               url={`https://www.youtube.com/watch?v=${currentVideoSnippet?.id}`}
