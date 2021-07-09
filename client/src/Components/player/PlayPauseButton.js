@@ -7,12 +7,14 @@ import {
   PlayArrow
 } from "@material-ui/icons/";
 
-const PlayPauseButton = ({ player, audioState, minimized }) => {
+const PlayPauseButton = ({ player, audioState, minimized, changeAudioState }) => {
   const togglePlayPause = e => {
     if (audioState === "playing") {
-      player.pause();
+      // player?.pause();
+      changeAudioState('paused');
     } else if (audioState === "paused") {
-      player.play();
+      changeAudioState('playing');
+      // player?.play();
     }
     e.stopPropagation();
   };

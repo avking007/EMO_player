@@ -1,45 +1,42 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from "@material-ui/core";
 import { IconButton } from "@material-ui/core/";
 
 import TopBar from '../../player/TopBar';
-import MusicArt from '../../player/MusicArt';
 import { ThumbDown } from "@material-ui/icons/";
 import TimelineController from '../../player/TimelineController';
+import ReactPlayer from 'react-player';
+
 import PlayPauseButton from '../../player/PlayPauseButton';
 import PreviousButton from '../../player/PreviousButton';
 import NextButton from '../../player/NextButton';
 import { setCurrentSong, userPlaySong, userSkipSong } from '../../../actions/songs';
-import getAudioLink from '../../../apis/getAudioLink';
 import '../../../style.css'
 
-const MoodPlayer = ({ currentMoodPlaylist, match, history, currentSong, setCurrentSong, userPlaySong, userSkipSong }) => {
+const MoodPlayer = ({
+    currentMoodPlaylist,
+    match,
+    history,
+    currentSong,
+    setCurrentSong,
+    userPlaySong,
+    userSkipSong
+}) => {
+    
     let playerStyle = {
         zIndex: 1400,
         transition: "all .3s ease",
+        height: " calc(100vh - 30px)",
+        justifyContent: "space-evenly",
     };
 
     const { mood } = match.params;
-    const containerRef = useRef(null);
-
-    const body = document.querySelector("body");
-
-    const [playerState, setPlayerState] = useState();
     const audioPlayer = useRef();
-    const [audioState, setAudioState] = useState(null);
-    const player = audioPlayer.current;
+    const [audioState, setAudioState] = useState("loading");
+
     if (!currentSong) {
         history.push(`/mood/${mood}`);
-    }
-
-    if (playerState === "minimized") {
-        playerStyle.transform = "translateY(calc(100% - 106px))";
-        playerStyle.zIndex = 0;
-        // if theme is not dark then only apply the pink style
-        playerStyle.background = "#333";
-        playerStyle.background = "#e91e63"
-        body.style.overflow = "auto";
     }
 
     const playNext = () => {
@@ -51,53 +48,64 @@ const MoodPlayer = ({ currentMoodPlaylist, match, history, currentSong, setCurre
     };
 
     const playPrevious = () => {
-
-        // if the player time is greater than 5 sec we will move the time to 0
-        if (player.currentTime > 5) {
-            player.currentTime = 0;
-        } else {
-            const currentIndex = currentMoodPlaylist.findIndex(
-                (song) => song.songId === currentSong.songId
-            );
-            let song;
-            if (currentIndex !== -1) {
-                song = currentMoodPlaylist[currentIndex - 1 === -1 ? currentMoodPlaylist.length - 1 : currentIndex - 1]; //we will play the previous
-                setCurrentSong(song);
-
-            } else {
-                player.currentTime = 0;
-            }
+        const currentIndex = currentMoodPlaylist.findIndex(
+            (song) => song.songId === currentSong.songId
+        );
+        if (currentIndex !== -1) {
+            const song = currentMoodPlaylist[currentIndex - 1 === -1 ? currentMoodPlaylist.length - 1 : currentIndex - 1]; //we will play the previous
+            setCurrentSong(song);
         }
     };
 
     const handleSkipSong = () => {
-        userSkipSong(mood, currentSong.songId, currentSong.title, currentSong.channelTitle, currentSong.thumbnail);
+        userSkipSong(
+            mood,
+            currentSong.songId,
+            currentSong.title,
+            currentSong.channelTitle,
+            currentSong.thumbnail
+        );
+        playNext();
     }
-    const returnMaximizedPlayer = () => (playerState === "maximized") && (
-        <>
+
+    const songEnded = () => {
+        playNext();
+    };
+
+    const handleSongReady = () => {
+        setAudioState('playing');
+        userPlaySong(
+            mood,
+            currentSong.songId,
+            currentSong.title,
+            currentSong.channelTitle,
+            currentSong.thumbnail,
+        );
+    }
+
+    return (
+        <div className={"mediaPlayerContainer"}>
             <Grid
                 container
                 direction="column"
                 className="main-player-inner"
-                style={{
-                    height: " calc(100vh - 46px)",
-                    justifyContent: "space-evenly",
-                    ...playerStyle
-                }}
+                style={playerStyle}
             >
                 <TopBar
                     song={currentSong}
-                    player={player}
-                    setPlayerState={setPlayerState}
                     history={history}
                 />
-                <div className="musicArtContainer">
-                    <MusicArt
-                        data={currentSong}
-                        audioEl={player}
-                    />
-                </div>
-                <TimelineController audioState={audioState} player={player} />
+                <ReactPlayer
+                    onReady={handleSongReady}
+                    onBufferEnd={() => setAudioState("playing")}
+                    ref={audioPlayer}
+                    onEnded={songEnded}
+                    onPause={() => setAudioState('paused')}
+                    playing={audioState === "playing" ? true : false}
+                    url={`https://www.youtube.com/watch?v=${currentSong.songId}`}
+                    style={{ margin: "auto", marginTop: "5rem" }}
+                />
+                <TimelineController audioState={audioState} player={audioPlayer} />
 
                 <Grid
                     container
@@ -107,114 +115,13 @@ const MoodPlayer = ({ currentMoodPlaylist, match, history, currentSong, setCurre
                     style={{ maxWidth: "290px", height: "80px", margin: "0 auto" }}
                 >
                     <PreviousButton playPrevious={playPrevious} />
-                    <PlayPauseButton player={player} audioState={audioState} />
+                    <PlayPauseButton changeAudioState={setAudioState} audioState={audioState} />
                     <NextButton onPlayNext={playNext} />
                     <IconButton style={{ color: "#fff" }} aria-label="Next" onClick={handleSkipSong}>
                         <ThumbDown style={{ color: "#fff" }} />
                     </IconButton>
                 </Grid>
             </Grid>
-        </>
-    );
-
-    const setupMediaSessions = () => {
-        if ("mediaSession" in navigator) {
-            navigator.mediaSession.metadata = new window.MediaMetadata({
-                title: currentSong.title,
-                artist: currentSong.channelTitle,
-                artwork: [
-                    {
-                        src: currentSong.thumbnail,
-                        sizes: "512x512",
-                        type: "image/png",
-                    },
-                ],
-            });
-            navigator.mediaSession.setActionHandler("play", () => {
-                /* Code excerpted. */
-                playAudio();
-            });
-            navigator.mediaSession.setActionHandler("pause", () => {
-                /* Code excerpted. */
-                audioPlayer.current.pause();
-            });
-            navigator.mediaSession.setActionHandler("previoustrack", () => {
-                playPrevious();
-            });
-            navigator.mediaSession.setActionHandler("nexttrack", () => {
-                playNext();
-            });
-        }
-    };
-
-    const playAudio = () => {
-        audioPlayer.current
-            .play()
-            .then((_) => {
-                // Automatic playback started!
-                // Show playing UI.
-                setupMediaSessions();
-            })
-            .catch((error) => {
-                // Auto-play was prevented
-                // Show paused UI.
-                setAudioState("paused");
-            });
-    };
-
-    // this will be fired when song is ended
-    const songEnded = () => {
-        playNext();
-    };
-
-    const handleSongLoad = () => {
-        userPlaySong(mood, currentSong.songId, currentSong.title, currentSong.channelTitle, currentSong.thumbnail);
-    }
-
-    useEffect(() => {
-        const getAudio = async (data) => {
-            setAudioState("loading");
-            try {
-                const res = await getAudioLink.get("/song", {
-                    params: { id: data },
-                });
-
-                // set the audio data
-                audioPlayer.current.src = res.data;
-                playAudio();
-
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        setPlayerState("maximized");
-        setAudioState("loading");
-        if (currentSong?.songId) getAudio(currentSong.songId);
-        else history.push('/home')
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSong]);
-
-    return (
-        <div
-            ref={containerRef}
-            className={"mediaPlayerContainer"}
-        >
-            {returnMaximizedPlayer()}
-            <audio
-                onLoadStart={() => {
-                    setAudioState("loading");
-                }}
-                id="audio-element"
-                onLoadedData={handleSongLoad}
-                onPlay={() => setAudioState("playing")}
-                onPlaying={() => setAudioState("playing")}
-                onPause={() => setAudioState("paused")}
-                onEnded={songEnded}
-                autoPlay
-                ref={audioPlayer}
-            />
         </div>
     );
 };

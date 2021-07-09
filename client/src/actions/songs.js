@@ -79,3 +79,18 @@ export const closeCurrentSong = () => dispatch => {
         console.log(error);
     }
 }
+
+
+export const newPlaylistCreated = (songs) => dispatch => {
+    try {
+        const ytSongsArray = [];
+        for (let song = 0; song < songs.length; song++) {
+            const { snippet: { title, channelTitle, thumbnails } } = songs[song];
+            const songObj = { title, channelTitle, thumbnail: thumbnails?.high?.url, songId: songs[song].id.videoId }
+            ytSongsArray.push(songObj);
+        }
+        dispatch({ type: PLAYLIST_CREATED, payload: ytSongsArray });
+    } catch (error) {
+        console.log(error);
+    }
+}

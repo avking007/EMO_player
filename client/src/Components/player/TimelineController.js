@@ -65,16 +65,13 @@ const TimelineController = ({ audioState, player, minimized }) => {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    if (player) {
-      setCurrentTime(player.currentTime);
-    }
+    setCurrentTime(player.current.getCurrentTime());
     // we will update the time of player every 800ms
     let setTimeInterval;
     if (audioState === 'playing') {
       setTimeInterval = setInterval(() => {
-        setCurrentTime(player.currentTime);
-
-      }, 800);
+        setCurrentTime(player.current.getCurrentTime());
+      }, 500);
     } else {
       clearInterval(setTimeInterval);
     }
@@ -82,14 +79,14 @@ const TimelineController = ({ audioState, player, minimized }) => {
   }, [audioState, player]);
 
   const handleChange = (event, newValue) => {
-    player.currentTime = newValue;
     setCurrentTime(newValue);
+    player.current.seekTo(newValue);
   };
 
   const showDuration = () => {
     if (player) {
-      if (player.duration) {
-        return formatTime(player.duration);
+      if (player.current?.getDuration()) {
+        return formatTime(player.current.getDuration());
       } else {
         return '0:00';
       }
@@ -101,7 +98,7 @@ const TimelineController = ({ audioState, player, minimized }) => {
   // condition rendering
   if (minimized) {
     return (
-      <MiniSlider value={currentTime} max={player ? player.duration : 0} />
+      <MiniSlider value={currentTime} max={player?.current?.getDuration() || 0} />
     );
   } else {
     return (
@@ -118,7 +115,7 @@ const TimelineController = ({ audioState, player, minimized }) => {
         <PrettoSlider
           value={currentTime}
           onChange={handleChange}
-          max={player ? player.duration : 0}
+          max={player?.current?.getDuration() || 0}
         />
       </div>
     );

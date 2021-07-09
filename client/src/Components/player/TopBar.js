@@ -7,7 +7,6 @@ import {
 import { connect } from "react-redux";
 
 import {
-  ExpandMore,
   GetApp,
   Reply,
   DoneOutline,
@@ -15,7 +14,6 @@ import {
 } from "@material-ui/icons/";
 import VolumeController from "./VolumeController";
 import { useSongMethods } from "../RenderDatabase";
-import SleepTimer from './SleepTimer'
 import { GlobalContext } from "../GlobalState";
 import { closeCurrentSong } from "../../actions/songs";
 import { useParams } from "react-router-dom";
@@ -33,7 +31,7 @@ const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => 
   const { snackbarMsg } = useContext(GlobalContext);
   const [isSongDownloaded, setSongDownloaded] = useState(false);
   const [isSongDownloading, setSongDownloading] = useState(false);
-  const {mood} = useParams();
+  const { mood } = useParams();
 
   const {
     handleDownload,
@@ -63,14 +61,13 @@ const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => 
     }
   };
 
-  const minimizePlayer = () => {
-    setPlayerState("minimized");
-    history.goBack()
-  };
-
   const handleClosePlayer = () => {
     closeCurrentSong();
-    history.push(`/mood/${mood}`)
+    if (mood) {
+      history.push(`/mood/${mood}`)
+    } else {
+      history.push('/home');
+    }
   };
 
   return (
@@ -93,13 +90,13 @@ const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => 
         color="primary"
       />
 
-      <SleepTimer player={player} />
+      {/* <SleepTimer player={player} /> */}
 
       <div>
         {isSongDownloaded ? (
           <DoneOutline
             style={{ color: "#fff" }}
-            onClick={() => handleRemoveSong(song?.id || song?.songId )}
+            onClick={() => handleRemoveSong(song?.id || song?.songId)}
           /> //song will be removed
         ) : (
           <>
@@ -116,18 +113,10 @@ const TopBar = ({ song, player, setPlayerState, history, closeCurrentSong }) => 
         {/* if the song is downloading we will show loading */}
       </div>
 
-      {song?.songId ? (
-        <Close onClick={handleClosePlayer} fontSize="large" style={{ color: "#fff", cursor: "pointer", paddingRight: '10px', transform: "translateY(-7px)" }} />
-      ) : (
-        <ExpandMore
-          onClick={minimizePlayer}
-          fontSize="large"
-          style={{ transform: "translateY(-7px)", color: "#fff" }}
-        />
-      )}
+      <Close onClick={handleClosePlayer} fontSize="large" style={{ color: "#fff", cursor: "pointer", paddingRight: '10px', transform: "translateY(-7px)" }} />
 
     </Grid>
   );
 };
 
-export default connect(null, {closeCurrentSong})(TopBar);
+export default connect(null, { closeCurrentSong })(TopBar);

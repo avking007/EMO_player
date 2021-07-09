@@ -7,7 +7,7 @@ import React, {
   lazy,
 } from "react";
 
-import { withRouter, Route, Switch } from "react-router-dom";
+import { withRouter, Switch } from "react-router-dom";
 
 import { Grid, CircularProgress } from "@material-ui/core";
 
@@ -21,14 +21,11 @@ import {
 } from "../external/saveSong";
 
 // import the db from save song
-import MainPlayer from "./player/MainPlayer";
 import PrivateRoute from "./Routes/PrivateRoute";
 // pages
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
 const SearchResult = lazy(() => import("./SearchResult"));
 const HomePage = lazy(() => import("./sections/HomePage"));
-
-let previousLocation;
 
 const CurrentSection = ({ history, location }) => {
   const [{ searchResult }] = useContext(GlobalContext);
@@ -80,21 +77,13 @@ const CurrentSection = ({ history, location }) => {
     removeDownloadingState();
   }, [history, location]);
 
-  const checkPrevLocation = () => {
-    if (location.pathname === "/play") {
-      return previousLocation;
-    } else {
-      return location;
-    }
-  };
-
   return (
     <div>
       <Suspense fallback={circularLoader}>
-        <Switch location={checkPrevLocation()}>
+        <Switch>
           <PrivateRoute
             path="/search"
-            render={(props) => <SearchResult videos={searchResult} />}
+            render={(props) => <SearchResult {...props} videos={searchResult} />}
           />
           <PrivateRoute
             path="/home"
@@ -124,8 +113,8 @@ const CurrentSection = ({ history, location }) => {
               return <RenderDatabase songs={songsHistoryState} />;
             }}
           />
+          
         </Switch>
-        <Route path="/" component={MainPlayer} />
       </Suspense>
     </div>
   );

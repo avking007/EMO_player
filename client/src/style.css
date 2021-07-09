@@ -128,6 +128,7 @@ svg.songHeart.left {
   height: calc(100% - 200px);
   height: 100%;
   min-height: 470px;
+  /* overflow-y: auto; */
   /* half of the portion will be taken by player */
 }
 

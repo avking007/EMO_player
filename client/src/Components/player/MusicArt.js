@@ -83,12 +83,13 @@ const MusicArt = ({ data, rating, audioEl }) => {
     // this regex is to remove channel name from song title
     const re = new RegExp(data?.channelTitle + " - | : ", "g");
 
-    return data?.title.replace(re, "");
+    return data?.title?.replace(re, "") || data?.snippet?.title  || "";
   };
 
   const getThumbnail = () => {
-      return data?.thumbnail;
+      return data?.thumbnail || data?.sdThumbnail || data?.maxThumbnail;
   };
+  console.log(data);
 
   return (
     <Grid

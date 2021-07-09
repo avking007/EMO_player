@@ -16,7 +16,7 @@ const ListItem = ({song, mood, history, setCurrentSong}) => {
   
   const handleClick = () => {
     setCurrentSong(song);
-    history.push(`/${mood}/${song.songId}`)
+    history.push(`/mood/${mood}/${song.songId}`)
   }
   return (
     <div onClick={handleClick}>
@@ -26,7 +26,7 @@ const ListItem = ({song, mood, history, setCurrentSong}) => {
             className="searchThumb"
             style={{ width: "60px", height: "60px", marginRight: "15px" }}
             alt={song?.title}
-            src={song?.thumbnail || song?.thumbnails?.high?.url}
+            src={song?.thumbnail}
           />
         </ListItemAvatar>
         <ListItemText

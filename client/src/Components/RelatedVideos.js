@@ -15,10 +15,8 @@ import {
   MusicVideo,
   LibraryMusic,
   Shuffle,
-  Repeat,
   KeyboardArrowUp,
   KeyboardArrowDown,
-  RepeatOne,
 } from "@material-ui/icons";
 
 import { GlobalContext } from "./GlobalState";
@@ -44,8 +42,6 @@ const RelatedVideos = ({
   playerState,
   relatedVideos,
   setRelatedVideos,
-  setIsRepeatOn,
-  isRepeatOn,
 }) => {
   const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
@@ -119,14 +115,11 @@ const RelatedVideos = ({
         <Typography variant="h6">Coming Next</Typography>
         <Shuffle onClick={handleShuffleClick} />
         {/* this will show the repeat button and repeat the song */}
-        {isRepeatOn ? (
-          <RepeatOne onClick={setIsRepeatOn} />
-        ) : (
-          <Repeat onClick={setIsRepeatOn} />
-        )}
         {returnPlaylistExpandBtn()}
       </Grid>
-      <List dense={true}>{renderResult}</List>
+      {playerState === 'playlist' && (
+        <List dense={true}>{renderResult}</List>
+      )} 
     </div>
   );
 };
