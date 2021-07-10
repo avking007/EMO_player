@@ -1,20 +1,31 @@
 import { CircularProgress, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { userPlaySong, userSkipSong } from "../../../actions/songs";
+import { IconButton } from "@material-ui/core/";
+import { userPlaySong, userSkipSong, playlistCreated, playlistUpdated, newPlaylistCreated } from "../../../actions/songs";
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import youtubeSearch from "../../../apis/youtubeSearch";
 import { emoAlgorithm } from "../../../utils/emoAlgorithm";
+import MoodPlayer from '../MoodPlayer/MoodPlayer';
 import ListItem from "./ListItem";
 
-const MoodPlaylist = ({ areUserSongsLoading, songsArray, userPlaySong, userSkipSong, match }) => {
-  const [searchResult, setSearchResult] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const MoodPlaylist = ({
+  currentSong,
+  areUserSongsLoading,
+  songsArray,
+  currentMoodPlaylist,
+  match,
+  playlistCreated,
+  playlistUpdated,
+  newPlaylistCreated
+}) => {
 
   const { mood } = match.params;
+  const [nextPageToken, setNextPageToken] = useState("");
 
   const CircularLoader = () => (
     <Grid
-      style={{ height: "109vh" }}
+      style={{ height: "15vh" }}
       container
       justify="center"
       alignItems="center"
@@ -22,22 +33,6 @@ const MoodPlaylist = ({ areUserSongsLoading, songsArray, userPlaySong, userSkipS
       <CircularProgress />
     </Grid>
   );
-
-  const getCustomPlaylist = (songs) => {
-    const newPlaylist = emoAlgorithm(songs);
-
-    return (
-      <div
-      // variants={ulVariants}
-      // initial={false}
-      // animate={isOpen ? "open" : "closed"}
-      >
-        {newPlaylist.map((song, index) => {
-          return <ListItem key={index} song={song} />;
-        })}
-      </div>
-    );
-  };
 
   useEffect(() => {
     const getSearchResults = async () => {
@@ -48,48 +43,63 @@ const MoodPlaylist = ({ areUserSongsLoading, songsArray, userPlaySong, userSkipS
             maxResults: 15 - songsArray[mood].length,
           },
         });
-        setSearchResult(res.data.items);
 
+        playlistUpdated(res.data.items);
       } catch (error) {
         console.log(error);
       }
     };
-    if (songsArray[mood]?.length < 15) {
-      getSearchResults();    
-    }
-  }, [songsArray, mood])
-  
-  useEffect(() => {
-    if (searchResult.length > 0) {
-      setIsLoading(false);
-    }
-  }, [searchResult])
 
+    const getCustomPlaylist = (songs) => {
+      const newPlaylist = emoAlgorithm(songs);
+      playlistCreated(newPlaylist);
+    };
+    if (songsArray[mood]?.length > 0) getCustomPlaylist(songsArray[mood]);
+    if (!areUserSongsLoading && songsArray[mood]?.length < 15) getSearchResults();
+  }, [songsArray, mood, playlistCreated, playlistUpdated, areUserSongsLoading])
 
-  if (areUserSongsLoading) {
-    return CircularLoader();
-  } else if (songsArray[mood]?.length < 15) {
+  const loadNewPlaylist = async () => {
+    try {
+      const res = await youtubeSearch.get("/search", {
+        params: {
+          q: `${mood} songs`,
+          maxResults: 15,
+          pageToken: nextPageToken
+        }
+      });
+
+      setNextPageToken(res.data.nextPageToken);
+      newPlaylistCreated(res.data.items);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (areUserSongsLoading) return CircularLoader();
+  if (currentMoodPlaylist?.length) {
+
     return (
-      // get mixed results
-      <div style={{height:'fit-content'}}>
-        {getCustomPlaylist(songsArray[mood])}
-        {isLoading ? CircularLoader() : searchResult.map((song) => {
-          const { snippet } = song;
-          return <ListItem song={snippet} />
-        })}
+      <div style={{ minHeight: '100vh' }}>
+        <span style={{ paddingLeft: '15px', color: '#fff', margin: "auto" }}>Load new playlist</span>
+        <IconButton onClick={loadNewPlaylist} style={{ color: '#fff' }}>
+          <AutorenewIcon />
+        </IconButton>
+        {currentMoodPlaylist.map((song, index) => (
+          <ListItem key={index} song={song} mood={mood} />
+        ))}
       </div>
     );
-
-  } else if (songsArray[mood]?.length >= 15) {
-    // get only user songs but EMO customized songs
-    return getCustomPlaylist(songsArray[mood]);
   }
-  return null;
+  if (currentSong) return <MoodPlayer />
+  return (<div style={{ height: '100vh' }} />);
 }
 
+
 const mapper = (state) => ({
-  songsArray: state.song,
-  areUserSongsLoaded: state.song.isLoading,
+  songsArray: state.song.songsArray,
+  currentMoodPlaylist: state.song.currentMoodPlaylist,
+  areUserSongsLoading: state.song.isLoading,
+  currentSong: state.song.currentSong
 });
 
-export default connect(mapper, { userPlaySong, userSkipSong })(MoodPlaylist);
+export default connect(mapper, { userPlaySong, userSkipSong, playlistCreated, playlistUpdated, newPlaylistCreated })(MoodPlaylist);

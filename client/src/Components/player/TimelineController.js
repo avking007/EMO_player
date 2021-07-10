@@ -17,12 +17,13 @@ const PrettoSlider = withStyles({
       position: 'absolute',
       transform: 'scale(1.6)',
       borderRadius: '50px',
-      border: '1px solid',
+      border: '1px solid', 
     },
   },
   track: {
     height: 6,
     borderRadius: 4,
+    color: "#fff"
   },
   rail: {
     height: 6,
@@ -64,16 +65,13 @@ const TimelineController = ({ audioState, player, minimized }) => {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    if (player) {
-      setCurrentTime(player.currentTime);
-    }
+    setCurrentTime(player.current.getCurrentTime());
     // we will update the time of player every 800ms
     let setTimeInterval;
     if (audioState === 'playing') {
       setTimeInterval = setInterval(() => {
-        setCurrentTime(player.currentTime);
-        // console.log()
-      }, 800);
+        setCurrentTime(player.current.getCurrentTime());
+      }, 500);
     } else {
       clearInterval(setTimeInterval);
     }
@@ -81,14 +79,14 @@ const TimelineController = ({ audioState, player, minimized }) => {
   }, [audioState, player]);
 
   const handleChange = (event, newValue) => {
-    player.currentTime = newValue;
     setCurrentTime(newValue);
+    player.current.seekTo(newValue);
   };
 
   const showDuration = () => {
     if (player) {
-      if (player.duration) {
-        return formatTime(player.duration);
+      if (player.current?.getDuration()) {
+        return formatTime(player.current.getDuration());
       } else {
         return '0:00';
       }
@@ -100,16 +98,16 @@ const TimelineController = ({ audioState, player, minimized }) => {
   // condition rendering
   if (minimized) {
     return (
-      <MiniSlider value={currentTime} max={player ? player.duration : 0} />
+      <MiniSlider value={currentTime} max={player?.current?.getDuration() || 0} />
     );
   } else {
     return (
       <div style={{ margin: '0 auto', width: '90%' }}>
         <Grid container direction="row" justify="space-between">
-          <Typography variant="body1" color="primary">
+          <Typography variant="body1" style={{color: "#fff"}}>
             {formatTime(currentTime)}
           </Typography>
-          <Typography variant="body1" color="primary">
+          <Typography variant="body1" style={{color: "#fff"}}>
             {showDuration()}
           </Typography>
         </Grid>
@@ -117,7 +115,7 @@ const TimelineController = ({ audioState, player, minimized }) => {
         <PrettoSlider
           value={currentTime}
           onChange={handleChange}
-          max={player ? player.duration : 0}
+          max={player?.current?.getDuration() || 0}
         />
       </div>
     );

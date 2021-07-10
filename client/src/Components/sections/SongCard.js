@@ -11,6 +11,7 @@ import {
   LinearProgress,
   Container,
 } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles({
   card: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
     height: 160,
   },
 });
-const MediaCard = ({ songs, categoryTitle }) => {
+const MediaCard = ({ songs, categoryTitle, history }) => {
 
   const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
@@ -53,6 +54,7 @@ const MediaCard = ({ songs, categoryTitle }) => {
         // this is the url of the max resolution of thumbnail
       });
     }
+    history.push(`/play/${video.id || video.snippet.resourceId.videoId }`)
   };
 
   const classes = useStyles();
@@ -70,7 +72,7 @@ const MediaCard = ({ songs, categoryTitle }) => {
             />
             <CardContent>
               <Typography gutterBottom variant="body2" component="p">
-                {song.snippet.title.slice(0, 70) + ' ...'}
+                {song?.snippet?.title?.slice(0, 70) + ' ...'}
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -94,4 +96,4 @@ const MediaCard = ({ songs, categoryTitle }) => {
   }
 };
 
-export default MediaCard;
+export default withRouter(MediaCard);

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Grid, Slider } from "@material-ui/core/";
 import { VolumeUp } from "@material-ui/icons/";
 
-const VolumeController = ({ player, setPlayerState }) => {
+const VolumeController = ({ handleVolumeLevel }) => {
   const [volume, setVolume] = useState(100);
 
   const volumeChange = (e, newVal) => {
     setVolume(newVal);
-    player.volume = newVal / 100;
+    const playerNewVolume= newVal / 100;
+    handleVolumeLevel(playerNewVolume);
     //
   };
 
@@ -16,10 +17,10 @@ const VolumeController = ({ player, setPlayerState }) => {
 
       <Grid container spacing={1} style={{ maxWidth: "200px" }}>
         <Grid item>
-          <VolumeUp color="primary" />
+          <VolumeUp style={{color: "#fff"}} />
         </Grid>
         <Grid item xs={3}>
-          <Slider value={volume} onChange={volumeChange} />
+          <Slider style={{color: "#fff"}} value={volume} onChange={volumeChange} />
         </Grid>
       </Grid>
   );

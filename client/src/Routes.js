@@ -11,9 +11,11 @@ import MoodDetector from "./Components/MoodDetector/MoodDetector";
 import SettingsPage from "./Components/sections/SettingsPage";
 import PrivacyPage from "./Components/sections/PrivacyPage";
 import ContributorsPage from "./Components/sections/ContributorsPage";
+import MoodPlayer from "./Components/MoodDetector/MoodPlayer/MoodPlayer";
 import BottomMenu from "./Components/Layout/BottomMenu";
 import PrivateRoute from "./Components/Routes/PrivateRoute";
 import MoodPlaylist from "./Components/MoodDetector/MoodPlaylist/MoodPlaylist";
+import MainPlayer from "./Components/player/MainPlayer";
 
 const Routes = () => {
 
@@ -21,14 +23,16 @@ const Routes = () => {
     <BrowserRouter>
       <SimpleAppBar />
       <Switch>
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/signin" exact component={SignIn} />
-        <Route path="/signup" exact component={SignUp} />
-        <Route path="/mood" component={MoodDetector} exact />
-        <Route path="/settings" component={SettingsPage} />
-        <Route path="/privacy" component={PrivacyPage} />
-        <Route path="/contributors" component={ContributorsPage} />
-        <Route path="/mood/:mood" component={MoodPlaylist} exact/>
+        <Route path="/"  component={LandingPage} exact/>
+        <Route path="/signin"  component={SignIn} exact/>
+        <Route path="/signup"  component={SignUp} exact/>
+        <PrivateRoute path="/mood" component={MoodDetector}  exact/>
+        <Route path="/settings" component={SettingsPage} exact/>
+        <Route path="/privacy" component={PrivacyPage} exact/>
+        <Route path="/contributors" component={ContributorsPage} exact/>
+        <PrivateRoute path="/mood/:mood" component={MoodPlaylist}  exact/>
+        <PrivateRoute path="/mood/:mood/:songId" component={MoodPlayer} exact/>
+        <PrivateRoute path="/play/:songId" component={MainPlayer}  exact/>
         <Route component={CurrentSection} />
 
       </Switch>

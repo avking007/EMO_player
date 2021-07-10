@@ -4,7 +4,7 @@ import { SkipNext } from "@material-ui/icons/";
 
 const PlayPauseButton = ({onPlayNext}) => {
   return (
-    <IconButton color="primary" aria-label="Next" onClick={onPlayNext}>
+    <IconButton aria-label="Next" onClick={onPlayNext} style={{color: '#fff'}}>
       <SkipNext fontSize="large"/>
     </IconButton>
   );

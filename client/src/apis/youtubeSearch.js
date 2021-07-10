@@ -1,11 +1,10 @@
 import axios from "axios";
 
 export const selectRandomKey = () => {
-  const keys = [
-    "AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604",
-    "AIzaSyCaSzog0sT9pG7VFK_P0Tt0HFW2Ql22p48",
-  ];
-  return keys;
+  const keys = ["AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604", "AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604"];
+
+  const random = Math.floor(Math.random() * Math.floor(keys.length)); //this will get a random number
+  return keys[random];
 };
 
 export default axios.create({
@@ -14,6 +13,6 @@ export default axios.create({
     part: "snippet",
     videoCategoryId: "10",
     type: "video",
-    key: "AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604",
+    key: selectRandomKey(),
   },
 });

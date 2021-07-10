@@ -11,6 +11,7 @@ import {
   Divider,
   ListItemText,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const Entities = require("html-entities").XmlEntities;
 const entities = new Entities();
@@ -43,7 +44,7 @@ const ulVariants = {
 
 const SearchResult = ({ videos }) => {
   const [isOpen, setisOpen] = useCycle(false, true);
-
+  const history = useHistory();
   const [, dispatch] = useContext(GlobalContext);
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: "setCurrentVideoSnippet", snippet: data });
@@ -61,6 +62,7 @@ const SearchResult = ({ videos }) => {
       sdThumbnail: `https://img.youtube.com/vi/${video.id.videoId}/sddefault.jpg`,
       // this is the url of the max resolution of thumbnail
     });
+    history.push(`/play/${video?.id?.videoId}`)
   };
 
   React.useEffect(() => {

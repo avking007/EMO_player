@@ -75,9 +75,9 @@ function SleepTimer({ player }) {
   return (
     <>
       {isTimerSet ? (
-        <Timer color="primary" onClick={() => setOpen(true)} />
+        <Timer style={{color: "#fff"}} onClick={() => setOpen(true)} />
       ) : (
-        <TimerOff color="primary" onClick={() => setOpen(true)} />
+        <TimerOff style={{color: "#fff"}} onClick={() => setOpen(true)} />
       )}
       <Dialog
         style={{ zIndex: 1400 }}

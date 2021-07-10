@@ -5,20 +5,28 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { setCurrentSong } from "../../../actions/songs";
 
 const Entities = require("html-entities").XmlEntities;
 const entities = new Entities();
 
-const ListItem = ({song}) => {
+const ListItem = ({song, mood, history, setCurrentSong}) => {
+  
+  const handleClick = () => {
+    setCurrentSong(song);
+    history.push(`/mood/${mood}/${song.songId}`)
+  }
   return (
-    <div>
+    <div onClick={handleClick}>
       <div style={{ display: 'flex', alignItems: 'center', color: '#fff', padding: '1rem', justifyContent:'center'}}>
         <ListItemAvatar>
           <Avatar
             className="searchThumb"
             style={{ width: "60px", height: "60px", marginRight: "15px" }}
             alt={song?.title}
-            src={song?.thumbnail || song?.thumbnails?.high?.url}
+            src={song?.thumbnail}
           />
         </ListItemAvatar>
         <ListItemText
@@ -37,4 +45,4 @@ const ListItem = ({song}) => {
   );
 };
 
-export default ListItem;
+export default connect(null, {setCurrentSong})(withRouter(ListItem));

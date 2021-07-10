@@ -1,47 +1,23 @@
-import React, { useState, useContext, useEffect } from "react";
-import {
-  Grid,
-  LinearProgress,
-  withStyles
-} from "@material-ui/core/";
+import React from "react";
+import { Grid } from "@material-ui/core/";
+import { connect } from "react-redux";
 
 import {
-  ExpandMore,
-  GetApp,
   Reply,
-  DoneOutline,
+  Close,
 } from "@material-ui/icons/";
 import VolumeController from "./VolumeController";
 import { useSongMethods } from "../RenderDatabase";
-import SleepTimer from './SleepTimer'
-import { GlobalContext } from "../GlobalState";
+import { closeCurrentSong } from "../../actions/songs";
+import { useParams } from "react-router-dom";
 
-const DownloadLoader = withStyles({
-  root: {
-    height: 2,
-    width: "70%",
-    margin: "0 auto",
-    transform: "translateY(-10px)"
-  }
-})(LinearProgress);
-
-const TopBar = ({ song, player, setPlayerState, history }) => {
-  const { snackbarMsg } = useContext(GlobalContext);
-  const [isSongDownloaded, setSongDownloaded] = useState(false);
-  const [isSongDownloading, setSongDownloading] = useState(false);
+const TopBar = ({ song, history, closeCurrentSong, volumeController }) => {
+  const { mood } = useParams();
 
   const {
-    handleDownload,
-    handleRemoveSong,
     deleteDialogComponent
   } = useSongMethods();
 
-  useEffect(() => {
-    if (snackbarMsg === "Song Downloaded" || song.audio) {
-      setSongDownloaded(true);
-      setSongDownloading(false);
-    }
-  }, [snackbarMsg, song.audio]);
   // if the song is downloaded we will change
 
   // share prompt using chrome web api
@@ -58,9 +34,13 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
     }
   };
 
-  const minimizePlayer = () => {
-    history.goBack()
-    setPlayerState("minimized");
+  const handleClosePlayer = () => {
+    closeCurrentSong();
+    if (mood) {
+      history.push(`/mood/${mood}`)
+    } else {
+      history.push('/home');
+    }
   };
 
   return (
@@ -75,45 +55,17 @@ const TopBar = ({ song, player, setPlayerState, history }) => {
         top: "0"
       }}
     >
-      <VolumeController player={player} />
+      <VolumeController handleVolumeLevel={volumeController} />
       {deleteDialogComponent}
       <Reply
-        style={{ transform: " scaleX(-1) translateY(-2px)" }}
+        style={{ transform: " scaleX(-1) translateY(-2px)", color: "#fff" }}
         onClick={shareSong}
         color="primary"
       />
-      
-      <SleepTimer player={player}/>
+      <Close onClick={handleClosePlayer} fontSize="large" style={{ color: "#fff", cursor: "pointer", paddingRight: '10px', transform: "translateY(-7px)" }} />
 
-      <div>
-        {isSongDownloaded ? (
-          <DoneOutline
-            color="primary"
-            onClick={() => handleRemoveSong(song.id)}
-          /> //song will be removed
-        ) : (
-          <>
-            <GetApp
-              color="primary"
-              onClick={() => {
-                handleDownload(song.id);
-                setSongDownloading(true);
-              }}
-            />
-          </>
-        )}
-        {isSongDownloading ? <DownloadLoader color="primary" /> : null}
-        {/* if the song is downloading we will show loading */}
-      </div>
-
-      <ExpandMore
-        onClick={minimizePlayer}
-        color="primary"
-        fontSize="large"
-        style={{ transform: "translateY(-7px)" }}
-      />
     </Grid>
   );
 };
 
-export default TopBar;
+export default connect(null, { closeCurrentSong })(TopBar);

@@ -100,6 +100,7 @@ svg.songHeart.left {
   z-index: 1400;
   display: inline-block;
   transition: all 0.3s ease;
+  background-color: rgb(51, 51, 51);
 }
 
 .playerMinimized {
@@ -127,6 +128,7 @@ svg.songHeart.left {
   height: calc(100% - 200px);
   height: 100%;
   min-height: 470px;
+  /* overflow-y: auto; */
   /* half of the portion will be taken by player */
 }
 
