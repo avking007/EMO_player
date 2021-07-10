@@ -11,7 +11,6 @@ const App = () => {
   // load user on app load if token present
   useEffect(() => {
     store.dispatch(loadUser());
-    console.log(process.env);
   }, [])
 
   return (
