@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const selectRandomKey = () => {
-  const keys = ["AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604", "AIzaSyBNPu5ClRIe0QpOMOVDiQ1vV95zNoKt604"];
+  const keys = process.env.YOUTUBE_KEYS.split(" ");
 
   const random = Math.floor(Math.random() * Math.floor(keys.length)); //this will get a random number
   return keys[random];
