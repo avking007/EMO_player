@@ -2,9 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 
 import { DynamicSizeList as List } from 'react-window-dynamic';
 
-import CompletedTick from '../images/CompletedTick.svg';
-import DownloadIcon from '../images/DownloadIcon.svg';
-
 import {
   ListItem,
   ListItemAvatar,
@@ -13,12 +10,10 @@ import {
   ListItemText,
 } from '@material-ui/core';
 
-import DownloadDeleteDialog from './DownloadDeleteDialog';
 
 import { GlobalContext } from './GlobalState';
-
-import getAudioLink from '../apis/getAudioLink';
-import { downloadSong, deleteSongAudio } from '../external/saveSong';
+import { deleteSongAudio } from '../external/saveSong';
+import { useHistory } from 'react-router-dom';
 
 let currentId;
 
@@ -41,19 +36,6 @@ export const useSongMethods = (songId) => {
     setDontAskPopup(popupLocalState);
     // for popup settings
   }, []);
-
-  const handleDownload = async (songId) => {
-    // // console.log("here is the id", songId);
-    const res = await getAudioLink.get('/song', {
-      params: { id: songId },
-    });
-    // first we will fetch the song link then we will download it
-    // the download song function takes id and the url
-    await downloadSong(songId, res.data);
-    // after the downloading is done we will remove the downloading class
-    // set the snackbar message
-    setSnackbarMsg('Song Downloaded');
-  };
 
   const disablePopup = () => {
     localStorage.setItem('dontAskPopup', true);
@@ -82,22 +64,12 @@ export const useSongMethods = (songId) => {
     dontAskPopup ? deleteTheSong() : setDeleteDialogState(true);
   };
 
-  const deleteDialogComponent = dontAskPopup ? null : (
-    <DownloadDeleteDialog
-      isOpen={deleteDialogState}
-      handleCancel={() => setDeleteDialogState(false)} // we will just hide the dialog on cancel
-      handleDelete={deleteTheSong} //if user wants to delete the song we will just do it
-    />
-  );
-
   return {
-    handleDownload,
     handleRemoveSong,
     deleteTheSong,
     dontAskPopup,
     setDeleteDialogState,
     deleteDialogState,
-    deleteDialogComponent,
   };
 };
 
@@ -108,6 +80,7 @@ const RenderDatabase = (props) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
 
+  const history = useHistory();
   const handleClick = (song) => {
     // set all the info of current clicked video in this object
     setCurrentVideoSnippet({
@@ -120,24 +93,15 @@ const RenderDatabase = (props) => {
       sdThumbnail: `https://img.youtube.com/vi/${song.videoId}/sddefault.jpg`,
       // this is the url of the max resolution of thumbnail
     });
+  
+    history.push(`/play/${song?.videoId}`);
   };
 
   const {
-    handleDownload,
-    handleRemoveSong,
     deleteDialogComponent,
   } = useSongMethods();
 
-  const returnAnimatedClass = (song) => {
-    if (song.downloadState === 'downloading') {
-      // console.log(song.downloadState);
-      return 'downloading-animation';
-    } else {
-      return '';
-    }
-  };
-
-  const renderResult = songs.map((song, index) => {
+  const renderResult = songs.map((song) => {
     return (
       <>
         <ListItem
@@ -165,23 +129,6 @@ const RenderDatabase = (props) => {
             }
           />
         </ListItem>
-        <div
-          className="download-container"
-          onClick={() =>
-            song.audio
-              ? handleRemoveSong(song.videoId)
-              : handleDownload(song.videoId)
-          }
-        >
-          <div className="badge-container">
-            {/* if there is audio file then we will show tick mark icon */}
-            <img
-              className={returnAnimatedClass(song)}
-              src={song.audio ? CompletedTick : DownloadIcon}
-              alt="downloading icon"
-            />
-          </div>
-        </div>
       </>
     );
   });

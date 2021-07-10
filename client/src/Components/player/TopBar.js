@@ -1,50 +1,23 @@
-import React, { useState, useContext, useEffect } from "react";
-import {
-  Grid,
-  LinearProgress,
-  withStyles
-} from "@material-ui/core/";
+import React from "react";
+import { Grid } from "@material-ui/core/";
 import { connect } from "react-redux";
 
 import {
-  GetApp,
   Reply,
-  DoneOutline,
   Close,
 } from "@material-ui/icons/";
 import VolumeController from "./VolumeController";
 import { useSongMethods } from "../RenderDatabase";
-import { GlobalContext } from "../GlobalState";
 import { closeCurrentSong } from "../../actions/songs";
 import { useParams } from "react-router-dom";
 
-const DownloadLoader = withStyles({
-  root: {
-    height: 2,
-    width: "70%",
-    margin: "0 auto",
-    transform: "translateY(-10px)"
-  }
-})(LinearProgress);
-
 const TopBar = ({ song, history, closeCurrentSong, volumeController }) => {
-  const { snackbarMsg } = useContext(GlobalContext);
-  const [isSongDownloaded, setSongDownloaded] = useState(false);
-  const [isSongDownloading, setSongDownloading] = useState(false);
   const { mood } = useParams();
 
   const {
-    handleDownload,
-    handleRemoveSong,
     deleteDialogComponent
   } = useSongMethods();
 
-  useEffect(() => {
-    if (snackbarMsg === "Song Downloaded" || song?.audio) {
-      setSongDownloaded(true);
-      setSongDownloading(false);
-    }
-  }, [snackbarMsg, song]);
   // if the song is downloaded we will change
 
   // share prompt using chrome web api
@@ -89,28 +62,6 @@ const TopBar = ({ song, history, closeCurrentSong, volumeController }) => {
         onClick={shareSong}
         color="primary"
       />
-
-      <div>
-        {isSongDownloaded ? (
-          <DoneOutline
-            style={{ color: "#fff" }}
-            onClick={() => handleRemoveSong(song?.id || song?.songId)}
-          /> //song will be removed
-        ) : (
-          <>
-            <GetApp
-              style={{ color: "#fff" }}
-              onClick={() => {
-                handleDownload(song?.id || song?.songId);
-                setSongDownloading(true);
-              }}
-            />
-          </>
-        )}
-        {isSongDownloading ? <DownloadLoader color="primary" /> : null}
-        {/* if the song is downloading we will show loading */}
-      </div>
-
       <Close onClick={handleClosePlayer} fontSize="large" style={{ color: "#fff", cursor: "pointer", paddingRight: '10px', transform: "translateY(-7px)" }} />
 
     </Grid>

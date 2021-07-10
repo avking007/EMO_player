@@ -1,5 +1,5 @@
 import { Tab, Tabs, withStyles } from '@material-ui/core';
-import { Home, Favorite, GetApp, History } from '@material-ui/icons';
+import { Home, Favorite, History } from '@material-ui/icons';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -69,14 +69,6 @@ const BottomMenu = () => {
                 component={Link}
                 to="/liked"
                 label="Liked"
-            />
-
-            <CustomTab
-                icon={<GetApp />}
-                aria-label="Downloads"
-                component={Link}
-                to="/downloads"
-                label="Downloads"
             />
             <CustomTab
                 icon={<History />}

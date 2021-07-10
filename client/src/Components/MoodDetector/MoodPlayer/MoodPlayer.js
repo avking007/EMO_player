@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import { IconButton } from "@material-ui/core/";
 
 import TopBar from '../../player/TopBar';
-import { ThumbDown } from "@material-ui/icons/";
+import { ThumbDown, ThumbUp } from "@material-ui/icons/";
 import TimelineController from '../../player/TimelineController';
 import ReactPlayer from 'react-player';
 
@@ -13,6 +13,7 @@ import PreviousButton from '../../player/PreviousButton';
 import NextButton from '../../player/NextButton';
 import { setCurrentSong, userPlaySong, userSkipSong } from '../../../actions/songs';
 import '../../../style.css'
+import { rateSong } from '../../../external/saveSong';
 
 const MoodPlayer = ({
     currentMoodPlaylist,
@@ -57,6 +58,7 @@ const MoodPlayer = ({
         }
     };
 
+
     const handleSkipSong = () => {
         userSkipSong(
             mood,
@@ -66,6 +68,7 @@ const MoodPlayer = ({
             currentSong.thumbnail
         );
         playNext();
+        rateSong(currentSong.songId, 'disliked');
     }
 
     const songEnded = () => {
@@ -82,7 +85,9 @@ const MoodPlayer = ({
             currentSong.thumbnail,
         );
     }
-
+    const handleLikeSong = () => {
+        rateSong(currentSong.songid, "liked");
+      }
     return (
         <div className={"mediaPlayerContainer"}>
             <Grid
@@ -114,8 +119,12 @@ const MoodPlayer = ({
                     direction="row"
                     justify="space-evenly"
                     alignItems="center"
-                    style={{ maxWidth: "290px", height: "80px", margin: "0 auto" }}
+                    style={{ maxWidth: "350px", height: "80px", margin: "0 auto" }}
                 >
+                    
+              <IconButton style={{ color: "#fff" }} aria-label="Next" onClick={handleLikeSong}>
+                <ThumbUp style={{ color: "#fff" }} />
+              </IconButton>
                     <PreviousButton playPrevious={playPrevious} />
                     <PlayPauseButton changeAudioState={setAudioState} audioState={audioState} />
                     <NextButton onPlayNext={playNext} />

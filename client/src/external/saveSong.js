@@ -67,46 +67,6 @@ export const getLikedSongs = async () => {
   return likedSongs;
 };
 
-export const getDownloadedSongs = async () => {
-  const downloadedSongs = await db.songs
-    .where("[downloadState+timestamp]") //this will filter song based on time and downloaded
-    .between(["downloaded", Dexie.minKey], ["downloaded", Dexie.maxKey])
-    .reverse()
-    .toArray();
-  return downloadedSongs;
-};
-
-export const removeDownloadingState = async () => {
-  // find all the downloadState which is downloading and remove that
-  await db.songs
-    .where("[downloadState+timestamp]")
-    .between(["downloading", Dexie.minKey], ["downloading", Dexie.maxKey])
-    .modify((x) => {
-      delete x.downloadState;
-    });
-  // console.log(songs);
-};
-
-export const downloadSong = async (id, url) => {
-  try {
-    db.songs.update(id, {
-      downloadState: "downloading",
-    });
-    const thumbURL = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-    const [thumbnailBlob, songBlob] = await Promise.all([
-      fetchProxiedBlob(thumbURL),
-      fetchProxiedBlob(url),
-    ]);
-    db.songs.update(id, {
-      downloadState: "downloaded",
-      thumbnail: thumbnailBlob,
-      audio: songBlob,
-    });
-    return "downloaded";
-  } catch (error) {
-    return error;
-  }
-};
 
 export const deleteSongAudio = async (id) => {
   await db.songs.where({ videoId: id }).modify((x) => {
@@ -115,30 +75,3 @@ export const deleteSongAudio = async (id) => {
   });
   return "song deleted";
 };
-
-function fetchProxiedBlob(url) {
-  const URL = url;
-  return new Promise(function (resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://server.ylight.xyz/proxy/" + URL);
-    xhr.responseType = "blob";
-    xhr.onload = function () {
-      var status = xhr.status;
-      if (status >= 200 && status < 300) {
-        resolve(xhr.response);
-      } else {
-        reject({
-          status: status,
-          statusText: xhr.statusText,
-        });
-      }
-    };
-    xhr.send();
-    setTimeout(() => {
-      xhr.abort();
-      xhr.open("GET", "https://server.ylight.xyz/proxy/" + URL);
-
-      xhr.send();
-    }, 1000);
-  });
-}

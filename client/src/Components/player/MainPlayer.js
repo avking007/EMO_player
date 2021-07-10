@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import { connect } from 'react-redux';
 import { Grid } from "@material-ui/core";
 import { IconButton } from "@material-ui/core/";
-import { ThumbDown } from "@material-ui/icons/";
+import { ThumbDown, ThumbUp } from "@material-ui/icons/";
 
 import { GlobalContext } from "../GlobalState";
 import youtubeSearch from "../../apis/youtubeSearch";
@@ -18,6 +18,7 @@ import TopBar from "./TopBar";
 import RelatedVideos from "../RelatedVideos";
 
 import "../../style.css";
+import { rateSong } from "../../external/saveSong";
 
 const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
 
@@ -56,7 +57,7 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
               maxResults: 10,
             },
           });
-          const _res  = res.data.items.filter((song) => song.snippet !== (null || undefined))
+          const _res = res.data.items.filter((song) => song.snippet !== (null || undefined))
           setRelatedVideos(_res);
         } catch (error) {
           alert("Could not load a song because you have exhausted your quota!!! ");
@@ -73,7 +74,7 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
     }
     setAudioState('playing');
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentVideoSnippet]);
 
 
@@ -134,7 +135,7 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
     playerStyle.display = "none";
     playerStyle.background = "#333";
   }
-  
+
   if (playerState === "playlist") {
     playerStyle.transform = "translateY(-418px)";
   }
@@ -173,7 +174,11 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
       currentVideoSnippet.channelTitle,
       currentVideoSnippet.maxThumbnail
     );
+    rateSong(currentVideoSnippet.id, 'disliked');
     playNext();
+  }
+  const handleLikeSong = () => {
+    rateSong(currentVideoSnippet.id, "liked");
   }
 
   const returnMaximizedPlayer = () => {
@@ -213,8 +218,11 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
               direction="row"
               justify="space-evenly"
               alignItems="center"
-              style={{ maxWidth: "290px", height: "80px", margin: "0 auto" }}
+              style={{ maxWidth: "350px", height: "80px", margin: "0 auto" }}
             >
+              <IconButton style={{ color: "#fff" }} aria-label="Next" onClick={handleLikeSong}>
+                <ThumbUp style={{ color: "#fff" }} />
+              </IconButton>
               <PreviousButton playPrevious={playPrevious} />
               <PlayPauseButton changeAudioState={setAudioState} audioState={audioState} />
               <NextButton onPlayNext={playNext} />

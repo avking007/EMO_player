@@ -15,8 +15,6 @@ import { GlobalContext } from "./GlobalState";
 import {
   getHistory,
   getLikedSongs,
-  getDownloadedSongs,
-  removeDownloadingState,
   db,
 } from "../external/saveSong";
 
@@ -31,7 +29,6 @@ const CurrentSection = ({ history, location }) => {
   const [{ searchResult }] = useContext(GlobalContext);
   const [songsHistoryState, setSongsHistory] = useState([]);
   const [songsLikedState, setSongsLiked] = useState([]);
-  const [songsDownloadedState, setSongsDownloaded] = useState([]);
   const [tabValue, setTabValue] = useState(0);
   const [updateCount, setUpdateCount] = useState(0);
 
@@ -54,10 +51,6 @@ const CurrentSection = ({ history, location }) => {
         break;
 
       case 2:
-        setSongsDownloaded(await getDownloadedSongs());
-        break;
-
-      case 3:
         setSongsHistory(await getHistory());
         break;
 
@@ -74,7 +67,7 @@ const CurrentSection = ({ history, location }) => {
     db.on("changes", () => {
       setUpdateCount((c) => c + 1);
     });
-    removeDownloadingState();
+
   }, [history, location]);
 
   return (
@@ -100,20 +93,12 @@ const CurrentSection = ({ history, location }) => {
             }}
           />
           <PrivateRoute
-            path="/downloads"
-            render={(props) => {
-              setTabValue(2);
-              return <RenderDatabase songs={songsDownloadedState} />;
-            }}
-          />
-          <PrivateRoute
             path="/history"
             render={(props) => {
-              setTabValue(3);
-              return <RenderDatabase songs={songsHistoryState} />;
+              setTabValue(2);
+              return <RenderDatabase songs={songsHistoryState} {...props} />;
             }}
           />
-          
         </Switch>
       </Suspense>
     </div>
