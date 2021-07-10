@@ -20,7 +20,7 @@ export default function authorize(state = initState, dispatch) {
 
         case LOGOUT_SUCCESS:
             localStorage.removeItem('token');
-            return { ...state, loading: true, user: null, isAuthenticated: false };
+            return { ...state, loading: true, user: null, isAuthenticated: false, token: null };
 
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
