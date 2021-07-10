@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { CLEAR_USER_PLAYING_SONGS, PLAYLIST_CLEARED, PLAYLIST_CREATED, PLAYLIST_UPDATED, SONG_PLAYED, SONG_PLAYED_FAIL, SONG_SKIPPED, SONG_SKIPPED_FAIL, USER_SONG_PLAYED } from '../reducers/types';
-// import { API } from '../utils/backend';
 
 export const userPlaySong = (mood, songId, title, channelTitle, thumbnail) => async (dispatch) => {
     try {

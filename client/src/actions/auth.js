@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED, USER_SONGS_LOADED } from '../reducers/types';
-// import { API } from '../utils/backend';
 import setAuthToken from '../utils/setAuthToken';
 
 export const loadUser = () => async (dispatch) => {
