@@ -64,6 +64,7 @@ export const getLikedSongs = async () => {
     .between(["liked", Dexie.minKey], ["liked", Dexie.maxKey])
     .reverse()
     .toArray();
+  console.log(likedSongs);
   return likedSongs;
 };
 

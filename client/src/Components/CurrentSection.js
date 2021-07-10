@@ -46,7 +46,7 @@ const CurrentSection = ({ history, location }) => {
   const fetchSongs = useCallback(async () => {
     //it's same as the orders of our tabs
     switch (tabValue) {
-      case 1:
+      case 1:console.log('here');
         setSongsLiked(await getLikedSongs());
         break;
 

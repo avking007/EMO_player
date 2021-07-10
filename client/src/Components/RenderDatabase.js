@@ -102,7 +102,6 @@ const RenderDatabase = (props) => {
   } = useSongMethods();
 
   const renderResult = songs.map((song) => {
-    console.log(songs);
     return (
       <>
         <ListItem
