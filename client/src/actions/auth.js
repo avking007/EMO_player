@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED, USER_SONGS_LOADED } from '../reducers/types';
-import { API } from '../utils/backend';
+import { AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, SIGNUP_FAIL, SIGNUP_SUCCESS, USER_LOADED, USER_SONGS_LOADED } from '../reducers/types';
+// import { API } from '../utils/backend';
 import setAuthToken from '../utils/setAuthToken';
 
 export const loadUser = () => async (dispatch) => {
@@ -10,7 +10,7 @@ export const loadUser = () => async (dispatch) => {
     }
 
     try {
-        const user = await axios.get(`${API}/user`);
+        const user = await axios.get(`/user`);
         const {_id, first_name, last_name, email } = user.data.user;
         const userData = {_id, first_name, last_name, email};
 
@@ -30,7 +30,7 @@ export const login = (userDetails) => async (dispatch) => {
             },
         };
         const body = JSON.stringify(userDetails);
-        const user = await axios.post(`http://localhost:5000/user/login`, body, config);
+        const user = await axios.post(`/user/login`, body, config);
 
         dispatch({ type: LOGIN_SUCCESS, payload: user.data });
         dispatch(loadUser());
@@ -49,7 +49,7 @@ export const signUp = (userDetails) => async (dispatch) => {
         };
 
         const body = JSON.stringify(userDetails);
-        const user = await axios.post(`${API}/user/signup`, body, config);
+        const user = await axios.post(`/user/signup`, body, config);
 
         dispatch({ type: SIGNUP_SUCCESS, payload: user.data });
         dispatch(loadUser());
@@ -58,3 +58,7 @@ export const signUp = (userDetails) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const logout = () => dispatch => {
+    dispatch({type: LOGOUT_SUCCESS});
+}

@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { GlobalContext } from "../GlobalState";
-
+import { connect } from 'react-redux';
 import SearchBox from "./SearchBox";
+import { logout } from "../../actions/auth";
 import {
   AppBar,
   Toolbar,
@@ -13,7 +14,7 @@ import {
 
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 
-import { Face, Menu, Search } from "@material-ui/icons/";
+import { Face, Menu, Search, ExitToApp } from "@material-ui/icons/";
 
 const styles = {
   root: {
@@ -22,7 +23,7 @@ const styles = {
   title: {
     textAlign: "center",
     width: "calc(100% - 96px)",
-    color:"	#1db954"
+    color: "	#1db954"
   },
   input: {
     color: "#fff",
@@ -81,7 +82,7 @@ function SimpleAppBar(props) {
             color="inherit"
             aria-label="Menu"
             onClick={() => setMenuOpen(true)}
-            style={{color:"	#1db954"}}
+            style={{ color: "	#1db954" }}
           >
             <Menu />
           </IconButton>
@@ -89,19 +90,30 @@ function SimpleAppBar(props) {
             Emolight Music
           </Typography>
           <IconButton
-            style={{color:"	#1db954"}}
-            onClick ={() => props.history.push('/mood')}
-             >
+            style={{ color: "	#1db954" }}
+            onClick={() => props.history.push('/mood')}
+          >
             <Face />
           </IconButton>
           <IconButton
             onClick={() => setSearchState("clicked")}
             color="inherit"
             aria-label="Search"
-            style={{color:"	#1db954"}}
+            style={{ color: "	#1db954" }}
           >
             <Search />
           </IconButton>
+          {props.isAuthenticated && (
+            <IconButton
+              onClick={() => props.logout()}
+              color="inherit"
+              aria-label="Search"
+              style={{ color: "	#1db954" }}
+            >
+              <ExitToApp />
+            </IconButton>
+          )}
+
         </>
       );
     } else {
@@ -119,5 +131,8 @@ function SimpleAppBar(props) {
     </>
   );
 }
+const mapper = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
 
-export default withRouter(SimpleAppBar);
+export default connect(mapper, { logout })(withRouter(SimpleAppBar));
