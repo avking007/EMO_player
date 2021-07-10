@@ -12,7 +12,6 @@ connectDB();
 // middleware for handling body request
 app.use(express.json({ extended: false }));
 app.use(cors());
-console.log(process.env);
 // api routes
 app.use('/user', require('./routes/auth'));
 app.use('/song', require('./routes/songs'));
