@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import { IconButton } from "@material-ui/core/";
 
 import TopBar from '../../player/TopBar';
-import { ThumbDown, ThumbUp } from "@material-ui/icons/";
+import { ThumbDown } from "@material-ui/icons/";
 import TimelineController from '../../player/TimelineController';
 import ReactPlayer from 'react-player';
 
@@ -85,9 +85,7 @@ const MoodPlayer = ({
             currentSong.thumbnail,
         );
     }
-    const handleLikeSong = () => {
-        rateSong(currentSong.songid, "liked");
-      }
+
     return (
         <div className={"mediaPlayerContainer"}>
             <Grid
@@ -121,10 +119,6 @@ const MoodPlayer = ({
                     alignItems="center"
                     style={{ maxWidth: "350px", height: "80px", margin: "0 auto" }}
                 >
-                    
-              <IconButton style={{ color: "#fff" }} aria-label="Next" onClick={handleLikeSong}>
-                <ThumbUp style={{ color: "#fff" }} />
-              </IconButton>
                     <PreviousButton playPrevious={playPrevious} />
                     <PlayPauseButton changeAudioState={setAudioState} audioState={audioState} />
                     <NextButton onPlayNext={playNext} />
