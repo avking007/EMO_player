@@ -8,7 +8,8 @@
     "client": "npm start --prefix client",
     "install:client": "npm install --prefix client",
     "install:server": "npm install",
-    "dev": "concurrently \"npm run server\" \"npm run  client\""
+    "dev": "concurrently \"npm run server\" \"npm run  client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm build --prefix client"
   },
   "author": "Anish,meghna,Charu",
   "license": "ISC",
