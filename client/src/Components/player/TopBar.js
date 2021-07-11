@@ -7,17 +7,11 @@ import {
   Close,
 } from "@material-ui/icons/";
 import VolumeController from "./VolumeController";
-import { useSongMethods } from "../RenderDatabase";
 import { closeCurrentSong } from "../../actions/songs";
 import { useParams } from "react-router-dom";
 
 const TopBar = ({ song, history, closeCurrentSong, volumeController }) => {
   const { mood } = useParams();
-
-  const {
-    deleteDialogComponent
-  } = useSongMethods();
-
   // if the song is downloaded we will change
 
   // share prompt using chrome web api
@@ -56,7 +50,6 @@ const TopBar = ({ song, history, closeCurrentSong, volumeController }) => {
       }}
     >
       <VolumeController handleVolumeLevel={volumeController} />
-      {deleteDialogComponent}
       <Reply
         style={{ transform: " scaleX(-1) translateY(-2px)", color: "#fff" }}
         onClick={shareSong}
