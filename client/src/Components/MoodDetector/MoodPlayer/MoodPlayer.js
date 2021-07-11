@@ -11,7 +11,7 @@ import ReactPlayer from 'react-player';
 import PlayPauseButton from '../../player/PlayPauseButton';
 import PreviousButton from '../../player/PreviousButton';
 import NextButton from '../../player/NextButton';
-import { setCurrentSong, userPlaySong, userSkipSong } from '../../../actions/songs';
+import { setCurrentSong, userPlaySong, userSkipSong, userDislikeSong } from '../../../actions/songs';
 import '../../../style.css'
 import { rateSong } from '../../../external/saveSong';
 
@@ -22,7 +22,8 @@ const MoodPlayer = ({
     currentSong,
     setCurrentSong,
     userPlaySong,
-    userSkipSong
+    userSkipSong,
+    userDislikeSong,
 }) => {
     
     let playerStyle = {
@@ -68,6 +69,7 @@ const MoodPlayer = ({
             currentSong.thumbnail
         );
         playNext();
+        userDislikeSong(currentSong.songId, mood);
         rateSong(currentSong.songId, 'disliked');
     }
 
@@ -136,4 +138,4 @@ const mapper = (state) => ({
     currentSong: state.song.currentSong,
 });
 
-export default connect(mapper, { setCurrentSong, userPlaySong, userSkipSong })(MoodPlayer);
+export default connect(mapper, { setCurrentSong, userPlaySong, userSkipSong, userDislikeSong })(MoodPlayer);

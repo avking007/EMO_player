@@ -23,6 +23,10 @@ const UserSchema = new mongo.Schema({
       songId: {
         type: String
       },
+      liked:{
+        type: Boolean,
+        default: false,
+      },
       thumbnail: {
         type: String,
         default: ""
@@ -49,6 +53,10 @@ const UserSchema = new mongo.Schema({
       songId: {
         type: String
       },
+      liked:{
+        type: Boolean,
+        default: false,
+      },
       thumbnail: {
         type: String,
         default: ""
@@ -73,6 +81,10 @@ const UserSchema = new mongo.Schema({
     angry: [{
       songId: {
         type: String
+      },
+      liked:{
+        type: Boolean,
+        default: false,
       },
       thumbnail: {
         type: String,
@@ -102,6 +114,10 @@ const UserSchema = new mongo.Schema({
       thumbnail: {
         type: String,
         default: ""
+      },
+      liked:{
+        type: Boolean,
+        default: false,
       },
       channelTitle : {
         type: String,

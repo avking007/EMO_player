@@ -7,9 +7,8 @@ import { ThumbDown, ThumbUp } from "@material-ui/icons/";
 
 import { GlobalContext } from "../GlobalState";
 import youtubeSearch from "../../apis/youtubeSearch";
-import { userPlaySong, userSkipSong } from "../../actions/songs";
+import { userPlaySong, userSkipSong, userLikeSong, userDislikeSong } from "../../actions/songs";
 import "../../external/saveCountry";
-
 import PlayPauseButton from "./PlayPauseButton";
 import NextButton from "./NextButton";
 import PreviousButton from "./PreviousButton";
@@ -18,9 +17,9 @@ import TopBar from "./TopBar";
 import RelatedVideos from "../RelatedVideos";
 
 import "../../style.css";
-import { rateSong } from "../../external/saveSong";
 
-const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
+
+const MainPlayer = ({ history, userPlaySong, userSkipSong, userLikeSong, userDislikeSong }) => {
 
 
   const [{ currentVideoSnippet }, dispatch] = useContext(
@@ -174,11 +173,12 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
       currentVideoSnippet.channelTitle,
       currentVideoSnippet.maxThumbnail
     );
-    rateSong(currentVideoSnippet.id, 'disliked');
+    userDislikeSong(currentVideoSnippet.id, 'neutral');
     playNext();
   }
   const handleLikeSong = () => {
-    rateSong(currentVideoSnippet.id, "liked");
+    // rateSong(currentVideoSnippet.id, "liked");
+    userLikeSong(currentVideoSnippet.id, 'neutral');
   }
 
   const returnMaximizedPlayer = () => {
@@ -257,4 +257,4 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong }) => {
   );
 };
 
-export default connect(null, { userPlaySong, userSkipSong })(MainPlayer);
+export default connect(null, { userPlaySong, userSkipSong, userLikeSong, userDislikeSong })(MainPlayer);

@@ -4,6 +4,10 @@ import {
     PLAYLIST_CLEARED,
     PLAYLIST_CREATED,
     PLAYLIST_UPDATED,
+    SONG_DISLIKED,
+    SONG_DISLIKED_FAIL,
+    SONG_LIKED,
+    SONG_LIKED_FAIL,
     SONG_PLAYED,
     SONG_PLAYED_FAIL,
     SONG_SKIPPED,
@@ -49,8 +53,15 @@ export default function songDetails(state = initState, dispatch) {
         case PLAYLIST_CLEARED:
             return { ...state, currentMoodPlaylist: [] };
 
+        case SONG_DISLIKED:
+        case SONG_LIKED: 
+            return {...state, songsArray: payload }
+
         case LOGOUT_SUCCESS:
             return { songsArray: [], isLoading: true, currentMoodPlaylist: [], currentSong: null };
+        
+        case SONG_LIKED_FAIL:
+        case SONG_DISLIKED_FAIL:
         case SONG_PLAYED_FAIL:
         case SONG_SKIPPED_FAIL:
         default:

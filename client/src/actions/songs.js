@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CLEAR_USER_PLAYING_SONGS, PLAYLIST_CLEARED, PLAYLIST_CREATED, PLAYLIST_UPDATED, SONG_PLAYED, SONG_PLAYED_FAIL, SONG_SKIPPED, SONG_SKIPPED_FAIL, USER_SONG_PLAYED } from '../reducers/types';
+import { CLEAR_USER_PLAYING_SONGS, PLAYLIST_CLEARED, PLAYLIST_CREATED, PLAYLIST_UPDATED, SONG_DISLIKED, SONG_DISLIKED_FAIL, SONG_LIKED, SONG_LIKED_FAIL, SONG_PLAYED, SONG_PLAYED_FAIL, SONG_SKIPPED, SONG_SKIPPED_FAIL, USER_SONG_PLAYED } from '../reducers/types';
 
 export const userPlaySong = (mood, songId, title, channelTitle, thumbnail) => async (dispatch) => {
     try {
@@ -91,5 +91,25 @@ export const newPlaylistCreated = (songs) => dispatch => {
         dispatch({ type: PLAYLIST_CREATED, payload: ytSongsArray });
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const userLikeSong = (songId, mood) => async (dispatch) => {
+    try {
+        const res = await axios.patch(`/song/liked/${mood || 'neutral'}/${songId}`);
+        dispatch({ type: SONG_LIKED, payload: res.data.songDetails });
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: SONG_LIKED_FAIL });
+    }
+}
+
+export const userDislikeSong = (songId, mood) => async (dispatch) => {
+    try {
+        const res = await axios.patch(`/song/unlike/${mood || 'neutral'}/${songId}`);
+        dispatch({ type: SONG_DISLIKED, payload: res.data.songDetails });
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: SONG_DISLIKED_FAIL });
     }
 }

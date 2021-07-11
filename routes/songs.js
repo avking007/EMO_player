@@ -13,7 +13,7 @@ router.put('/played/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
         const mood = req.params.mood;
-        const {thumbnail, title, channelTitle} = req.body;
+        const { thumbnail, title, channelTitle } = req.body;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
         let isNewSongPlayed = true;
@@ -53,13 +53,13 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
     try {
         const songId = req.params.songId;
         const mood = req.params.mood;
-        const {thumbnail, title, channelTitle} = req.body;
+        const { thumbnail, title, channelTitle } = req.body;
         // get user
         const userSongs = await User.findById(req.user.id).select("songDetails");
 
         let isNewSongSkipped = true;
 
-        if (userSongs.songDetails[mood].length > 0 ) {
+        if (userSongs.songDetails[mood].length > 0) {
             // look for the song in the user song details array and increament the liked count by 1
             userSongs.songDetails[mood].forEach((song) => {
                 if (song.songId === songId) {
@@ -73,7 +73,7 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
         // and set likedCount to 1
         if (isNewSongSkipped) {
             userSongs.songDetails[mood].push({
-                songId, SkippedCount: 1,mood, title, channelTitle, thumbnail,
+                songId, SkippedCount: 1, mood, title, channelTitle, thumbnail,
             });
         }
         await userSongs.save();
@@ -84,5 +84,47 @@ router.put('/skipped/:songId/:mood', auth, async (req, res) => {
     }
 }
 );
+
+router.patch('/liked/:mood/:songId/', auth, async (req, res) => {
+    try {
+        const mood = req.params.mood;
+        const songId = req.params.songId;
+        const userSongs = await User.findById(req.user.id).select("songDetails");
+
+        userSongs.songDetails[mood].forEach((song) => {
+            if (song.songId === songId) {
+                song.liked = true;
+            }
+        });
+        
+        await userSongs.save();
+        res.json(userSongs);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send("Server error.")
+    }
+});
+
+router.patch('/unlike/:mood/:songId/', auth, async (req, res) => {
+    try {
+        const mood = req.params.mood;
+        const songId = req.params.songId;
+        const userSongs = await User.findById(req.user.id).select("songDetails");
+
+        userSongs.songDetails[mood].forEach((song) => {
+            if (song.songId === songId) {
+                song.liked = false;
+            }
+        });
+        
+        await userSongs.save();
+        res.json(userSongs);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send("Server error.")
+    }
+});
 
 module.exports = router;

@@ -13,19 +13,19 @@ import { Grid, CircularProgress } from "@material-ui/core";
 
 import { GlobalContext } from "./GlobalState";
 import {
-  getHistory,
-  getLikedSongs,
+  // getLikedSongs,
   db,
 } from "../external/saveSong";
 
 // import the db from save song
 import PrivateRoute from "./Routes/PrivateRoute";
+import { connect } from "react-redux";
 // pages
 const RenderDatabase = lazy(() => import("./RenderDatabase"));
 const SearchResult = lazy(() => import("./SearchResult"));
 const HomePage = lazy(() => import("./sections/HomePage"));
 
-const CurrentSection = ({ history, location }) => {
+const CurrentSection = ({ userSongs, history, location }) => {
   const [{ searchResult }] = useContext(GlobalContext);
   const [songsHistoryState, setSongsHistory] = useState([]);
   const [songsLikedState, setSongsLiked] = useState([]);
@@ -45,19 +45,37 @@ const CurrentSection = ({ history, location }) => {
 
   const fetchSongs = useCallback(async () => {
     //it's same as the orders of our tabs
+    const getHistorySongs = () => {
+      const historySongs = [];
+      for (let mood in userSongs) {
+        historySongs.push(...userSongs[mood]);
+      }
+      return historySongs;
+    }
+    const getLikedSongs = () => {
+      const likedSongs = [];
+      for (let mood in userSongs) {
+        userSongs[mood].forEach((song)=> {
+          if (song.liked) {
+            likedSongs.push(song);
+          }
+        });
+      }
+      return likedSongs;
+    }
     switch (tabValue) {
-      case 1:console.log('here');
-        setSongsLiked(await getLikedSongs());
+      case 1:
+        setSongsLiked(getLikedSongs());
         break;
 
       case 2:
-        setSongsHistory(await getHistory());
+        setSongsHistory(getHistorySongs());
         break;
 
       default:
         break;
     }
-  }, [tabValue]);
+  }, [tabValue, userSongs]);
 
   useEffect(() => {
     fetchSongs();
@@ -105,4 +123,7 @@ const CurrentSection = ({ history, location }) => {
   );
 };
 
-export default withRouter(CurrentSection);
+export const mapper = (state) => ({
+  userSongs: state.song.songsArray
+});
+export default connect(mapper)(withRouter(CurrentSection));
