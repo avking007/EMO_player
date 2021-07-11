@@ -89,29 +89,31 @@ function SimpleAppBar(props) {
           <Typography variant="h6" style={styles.title}>
             Emolight Music
           </Typography>
-          <IconButton
-            style={{ color: "	#1db954" }}
-            onClick={() => props.history.push('/mood')}
-          >
-            <Face />
-          </IconButton>
-          <IconButton
-            onClick={() => setSearchState("clicked")}
-            color="inherit"
-            aria-label="Search"
-            style={{ color: "	#1db954" }}
-          >
-            <Search />
-          </IconButton>
           {props.isAuthenticated && (
-            <IconButton
-              onClick={() => props.logout()}
-              color="inherit"
-              aria-label="Search"
-              style={{ color: "	#1db954" }}
-            >
-              <ExitToApp />
-            </IconButton>
+            <>
+              <IconButton
+                style={{ color: "	#1db954" }}
+                onClick={() => props.history.push('/mood')}
+              >
+                <Face />
+              </IconButton>
+              <IconButton
+                onClick={() => setSearchState("clicked")}
+                color="inherit"
+                aria-label="Search"
+                style={{ color: "	#1db954" }}
+              >
+                <Search />
+              </IconButton>
+              <IconButton
+                onClick={() => props.logout()}
+                color="inherit"
+                aria-label="Search"
+                style={{ color: "	#1db954" }}
+              >
+                <ExitToApp />
+              </IconButton>
+            </>
           )}
 
         </>
