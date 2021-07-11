@@ -27,7 +27,7 @@ const CurrentSection = ({ userSongs, history, location }) => {
     <Grid
       style={{ height: "109vh" }}
       container
-      justify="center"
+      justifyContent="center"
       alignItems="center"
     >
       <CircularProgress />
