@@ -13,7 +13,6 @@ import PreviousButton from '../../player/PreviousButton';
 import NextButton from '../../player/NextButton';
 import { setCurrentSong, userPlaySong, userSkipSong, userDislikeSong } from '../../../actions/songs';
 import '../../../style.css'
-import { rateSong } from '../../../external/saveSong';
 
 const MoodPlayer = ({
     currentMoodPlaylist,
@@ -70,7 +69,6 @@ const MoodPlayer = ({
         );
         playNext();
         userDislikeSong(currentSong.songId, mood);
-        rateSong(currentSong.songId, 'disliked');
     }
 
     const songEnded = () => {

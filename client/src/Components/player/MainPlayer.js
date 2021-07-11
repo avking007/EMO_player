@@ -177,7 +177,6 @@ const MainPlayer = ({ history, userPlaySong, userSkipSong, userLikeSong, userDis
     playNext();
   }
   const handleLikeSong = () => {
-    // rateSong(currentVideoSnippet.id, "liked");
     userLikeSong(currentVideoSnippet.id, 'neutral');
   }
 

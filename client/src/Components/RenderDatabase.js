@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import { DynamicSizeList as List } from 'react-window-dynamic';
 
@@ -12,66 +12,8 @@ import {
 
 
 import { GlobalContext } from './GlobalState';
-import { deleteSongAudio } from '../external/saveSong';
 import { useHistory } from 'react-router-dom';
 
-let currentId;
-
-export const useSongMethods = (songId) => {
-  const [, dispatch] = useContext(GlobalContext);
-
-  const setSnackbarMsg = React.useCallback(
-    (data) => {
-      dispatch({ type: 'setSnackbarMsg', snippet: data });
-    },
-    [dispatch]
-  );
-
-  const [deleteDialogState, setDeleteDialogState] = useState(false);
-  const [dontAskPopup, setDontAskPopup] = useState(null);
-
-  useEffect(() => {
-    //convert string to bool
-    const popupLocalState = localStorage.getItem('dontAskPopup') === 'true';
-    setDontAskPopup(popupLocalState);
-    // for popup settings
-  }, []);
-
-  const disablePopup = () => {
-    localStorage.setItem('dontAskPopup', true);
-    setDontAskPopup(true);
-  };
-
-  const deleteTheSong = async (checkBox) => {
-    await deleteSongAudio(currentId);
-    setDeleteDialogState(false);
-    setSnackbarMsg('Deleted Successfully');
-
-    // console.log(currentId, checkBox);
-    // we will set it to localstorage the popup option
-    if (checkBox) {
-      disablePopup();
-    }
-  };
-
-  // hadnling download dialog
-  const handleRemoveSong = (songId) => {
-    // console.log("handle remove dude");
-    currentId = songId;
-    // when user clicks on the download badge we will check the state
-    // then delete the song without showing the popup if dontAskPopup is true
-    // and delete the song by calling deleteTheSong
-    dontAskPopup ? deleteTheSong() : setDeleteDialogState(true);
-  };
-
-  return {
-    handleRemoveSong,
-    deleteTheSong,
-    dontAskPopup,
-    setDeleteDialogState,
-    deleteDialogState,
-  };
-};
 
 const RenderDatabase = (props) => {
   const songs = props.songs;
@@ -96,10 +38,6 @@ const RenderDatabase = (props) => {
   
     history.push(`/play/${song?.videoId}`);
   };
-
-  const {
-    deleteDialogComponent,
-  } = useSongMethods();
 
   const renderResult = songs.map((song) => {
     return (
@@ -150,8 +88,6 @@ const RenderDatabase = (props) => {
   ));
   return (
     <>
-      {deleteDialogComponent}
-
       <List
         height={window.innerHeight - 100}
         itemCount={songs.length}

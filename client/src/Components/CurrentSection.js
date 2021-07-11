@@ -6,17 +6,9 @@ import React, {
   Suspense,
   lazy,
 } from "react";
-
 import { withRouter, Switch } from "react-router-dom";
-
 import { Grid, CircularProgress } from "@material-ui/core";
-
 import { GlobalContext } from "./GlobalState";
-import {
-  // getLikedSongs,
-  db,
-} from "../external/saveSong";
-
 // import the db from save song
 import PrivateRoute from "./Routes/PrivateRoute";
 import { connect } from "react-redux";
@@ -30,7 +22,6 @@ const CurrentSection = ({ userSongs, history, location }) => {
   const [songsHistoryState, setSongsHistory] = useState([]);
   const [songsLikedState, setSongsLiked] = useState([]);
   const [tabValue, setTabValue] = useState(0);
-  const [updateCount, setUpdateCount] = useState(0);
 
   const circularLoader = (
     <Grid
@@ -79,14 +70,7 @@ const CurrentSection = ({ userSongs, history, location }) => {
 
   useEffect(() => {
     fetchSongs();
-  }, [updateCount, tabValue, fetchSongs]);
-
-  useEffect(() => {
-    db.on("changes", () => {
-      setUpdateCount((c) => c + 1);
-    });
-
-  }, [history, location]);
+  }, [tabValue, fetchSongs]);
 
   return (
     <div>
