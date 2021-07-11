@@ -9,8 +9,6 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
-    "dexie": "^3.0.3",
-    "dexie-observable": "^3.0.0-beta.11",
     "dotenv": "^8.6.0",
     "face-api.js": "^0.22.2",
     "framer-motion": "^4.1.17",
