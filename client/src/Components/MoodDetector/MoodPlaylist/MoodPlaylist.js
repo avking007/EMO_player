@@ -80,6 +80,7 @@ const MoodPlaylist = ({
 
     return (
       <div style={{ minHeight: '100vh' }}>
+        <div style={{color: 'white', padding: '1rem', background: 'rgb(29, 185, 84)'}}>{`Looks like your mood is ${mood}. Here are some ${mood} mood songs.`}</div>
         <span style={{ paddingLeft: '15px', color: '#fff', margin: "auto" }}>Load new playlist</span>
         <IconButton onClick={loadNewPlaylist} style={{ color: '#fff' }}>
           <AutorenewIcon />
