@@ -16,23 +16,25 @@ import BottomMenu from "./Components/Layout/BottomMenu";
 import PrivateRoute from "./Components/Routes/PrivateRoute";
 import MoodPlaylist from "./Components/MoodDetector/MoodPlaylist/MoodPlaylist";
 import MainPlayer from "./Components/player/MainPlayer";
+import Alert from "./Components/Layout/Alert";
 
 const Routes = () => {
 
   return (
     <BrowserRouter>
       <SimpleAppBar />
+      <Alert />
       <Switch>
-        <Route path="/"  component={LandingPage} exact/>
-        <Route path="/signin"  component={SignIn} exact/>
-        <Route path="/signup"  component={SignUp} exact/>
-        <PrivateRoute path="/mood" component={MoodDetector}  exact/>
-        <Route path="/settings" component={SettingsPage} exact/>
-        <Route path="/privacy" component={PrivacyPage} exact/>
-        <Route path="/contributors" component={ContributorsPage} exact/>
-        <PrivateRoute path="/mood/:mood" component={MoodPlaylist}  exact/>
-        <PrivateRoute path="/mood/:mood/:songId" component={MoodPlayer} exact/>
-        <PrivateRoute path="/play/:songId" component={MainPlayer}  exact/>
+        <Route path="/" component={LandingPage} exact />
+        <Route path="/signin" component={SignIn} exact />
+        <Route path="/signup" component={SignUp} exact />
+        <PrivateRoute path="/mood" component={MoodDetector} exact />
+        <Route path="/settings" component={SettingsPage} exact />
+        <Route path="/privacy" component={PrivacyPage} exact />
+        <Route path="/contributors" component={ContributorsPage} exact />
+        <PrivateRoute path="/mood/:mood" component={MoodPlaylist} exact />
+        <PrivateRoute path="/mood/:mood/:songId" component={MoodPlayer} exact />
+        <PrivateRoute path="/play/:songId" component={MainPlayer} exact />
         <Route component={CurrentSection} />
 
       </Switch>
