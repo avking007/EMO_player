@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { signUp } from '../../../actions/auth';
 
@@ -73,6 +73,9 @@ const SignUp = ({ isAuthenticated, signUp }) => {
               Signup
             </button>
           </form>
+        <div style={{ textAlign: "center", paddingTop: "1rem" }}>
+          <span style={{ color: "white" }}>Already have an account? </span><Link to='/signin'>Login</Link>
+        </div>
         </div>
       </div>
     </div>

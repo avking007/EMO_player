@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from 'react-redux'
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { login } from '../../../actions/auth';
 
 const SignIn = ({ isAuthenticated, login }) => {
@@ -23,7 +23,7 @@ const SignIn = ({ isAuthenticated, login }) => {
   }
 
   return (
-    <div className="container-fluid p-4" style={{height: '100vh'}}>
+    <div className="container-fluid p-4" style={{ height: '100vh' }}>
 
       <div className="col-md-6 offset-sm-3 text-left">
         <form>
@@ -53,6 +53,9 @@ const SignIn = ({ isAuthenticated, login }) => {
             Signin
           </button>
         </form>
+        <div style={{ textAlign: "center", paddingTop: "1rem" }}>
+          <span style={{ color: "white" }}>Don't have an account? </span><Link to='/signup'>Sign up</Link>
+        </div>
       </div>
 
     </div>
