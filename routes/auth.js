@@ -16,8 +16,7 @@ router.get('/', auth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     return res.json({ user });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send('Server Error');
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 
@@ -47,7 +46,7 @@ router.post(
       // check for already existing user
       let user = await User.findOne({ email });
       if (user) {
-        return res.status(400).json({ errors: ['User already exists.'] });
+        return res.status(400).json({ errors: [{ msg: 'User already exists.' }] });
       }
 
       // create new user
@@ -83,8 +82,7 @@ router.post(
         }
       );
     } catch (error) {
-      console.log(error);
-      return res.status(500).send('Server Error');
+      return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
   }
 );
@@ -110,15 +108,15 @@ router.post(
 
       //  check whether user exists or not
       const user = await User.findOne({ email });
-     
+
       if (!user) {
-        return res.status(500).json({ errors: ['User does not exists.'] });
+        return res.status(500).json({ errors: [{ msg: 'User does not exists.' }] });
       }
 
       //   if user exits, compare hash password and input password
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        return res.status(400).send('Invalid email or password');
+        return res.status(400).json({ errors: [{ msg: 'Invalid email or password' }] });
       }
 
       //  if user is valid, create payload and send jwt token
@@ -140,8 +138,7 @@ router.post(
         }
       );
     } catch (error) {
-      console.log(error);
-      return res.status(500).send('Server Error');
+      return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
   }
 );

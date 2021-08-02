@@ -101,8 +101,8 @@ router.patch('/liked/:mood/:songId/', auth, async (req, res) => {
         res.json(userSongs);
 
     } catch (error) {
-        console.log(error);
-        return res.status(500).send("Server error.")
+        return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+
     }
 });
 
@@ -122,8 +122,8 @@ router.patch('/unlike/:mood/:songId/', auth, async (req, res) => {
         res.json(userSongs);
 
     } catch (error) {
-        console.log(error);
-        return res.status(500).send("Server error.")
+        return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+
     }
 });
 
